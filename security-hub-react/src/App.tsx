@@ -2,6 +2,7 @@
 import React, { useEffect, useState, type ChangeEvent } from 'react'
 import { ApplicationsList } from './components/ApplicationsList';
 import { fetchApplications, type Application } from './services/applicationService';
+import { SearchBox } from './components/SearchBox';
 
 function App() {
   const [applications, setApplications] = useState<Application[]>([]);
@@ -37,8 +38,8 @@ function App() {
     };
   }, []);
 
-  const handleSearchChange: React.ChangeEventHandler<HTMLInputElement> = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+  const handleSearchChange = (newValue: string) => {
+    setSearchTerm(newValue);
   };
 
   const filteredApplications = applications.filter((app: Application) =>
@@ -56,17 +57,12 @@ function App() {
         <section className="app-section">
           <h2>Applications</h2>
 
-          {/* Filter */}
-          <div className="app-filter-row">
-            <span className="app-filter-label">Filter by name:</span>
-            <input
-              className="app-filter-input"
-              onChange={handleSearchChange}
-              placeholder="Type an application name..."
-              type="text"
-              value={searchTerm}
-            />
-          </div>
+          <SearchBox
+            label="Filter by name:"
+            onChange={handleSearchChange}
+            placeholder="Search applications..."
+            value={searchTerm}
+          />
 
           {isLoading && <p>Loading applications...</p>}
 
