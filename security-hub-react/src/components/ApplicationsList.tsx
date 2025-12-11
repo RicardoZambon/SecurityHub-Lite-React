@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Application } from '../services/applicationService';
 import styles from './ApplicationsList.module.scss';
+import { Link } from 'react-router-dom';
 
 type ApplicationListProps = {
     applications: Application[],
@@ -18,7 +19,12 @@ export function ApplicationsList({ applications }: ApplicationListProps) {
             <ul className={styles.list}>
                 {applications.map((app: Application) => (
                     <li key={app.id} className={styles.item}>
-                        <div className={styles.name}>{app.name}</div>
+                        <Link
+                        to={`/roles?appId=${app.id}`}
+                        style={{ color: 'inherit', textDecoration: 'none' }}
+                        >
+                            <div className={styles.name}>{app.name}</div>
+                        </Link>
                     </li>
                 ))}
             </ul>
