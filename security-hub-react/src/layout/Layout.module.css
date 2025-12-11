@@ -1,0 +1,109 @@
+@import 'tailwindcss';
+
+.layoutContainer {
+  @apply w-full h-screen flex overflow-hidden
+         bg-gray-100 text-gray-900 transition-colors duration-300;
+}
+
+:global(.dark) .layoutContainer {
+  @apply bg-gray-900 text-gray-100;
+}
+
+/* ============================== */
+/* SIDEBAR */
+/* ============================== */
+
+.sidebar {
+  @apply w-72 flex flex-col flex-shrink-0
+         bg-white border-r border-gray-200 
+         transition-colors duration-300;
+}
+
+:global(.dark) .sidebar {
+  @apply bg-gray-800 border-gray-700;
+}
+
+/* ============================== */
+/* BRANDING */
+/* ============================== */
+
+.brand {
+  @apply px-6 py-6 border-b border-gray-200;
+}
+
+:global(.dark) .brand {
+  @apply border-gray-700;
+}
+
+.brandTitle {
+  @apply text-2xl font-bold text-green-600 tracking-tight;
+}
+
+:global(.dark) .brandTitle {
+  @apply text-green-400;
+}
+
+.brandSubtitle {
+  @apply text-sm text-gray-500;
+}
+
+:global(.dark) .brandSubtitle {
+  @apply text-gray-400;
+}
+
+/* ============================== */
+/* NAVIGATION */
+/* ============================== */
+
+.nav {
+  @apply flex flex-col gap-1 px-4 py-6;
+}
+
+.sectionTitle {
+  @apply text-xs uppercase font-semibold text-gray-500 px-2 mt-4 mb-1 tracking-wide;
+}
+
+:global(.dark) .sectionTitle {
+  @apply text-gray-400;
+}
+
+.navLink {
+  @apply px-3 py-2 rounded-md text-sm font-medium text-gray-700
+         hover:bg-gray-200 transition-all;
+}
+
+:global(.dark) .navLink {
+  @apply text-gray-200 hover:bg-gray-700;
+}
+
+.navLinkActive {
+  @apply bg-green-600 text-white;
+}
+
+:global(.dark) .navLinkActive {
+  @apply bg-green-500 text-gray-900;
+}
+
+/* ============================== */
+/* CONTENT */
+/* ============================== */
+
+.content {
+  @apply flex-grow overflow-y-auto p-6;
+}
+
+/* ============================== */
+/* FOOTER */
+/* ============================== */
+
+.footer {
+  @apply mt-auto px-6 py-4 border-t border-gray-200;
+}
+
+:global(.dark) .footer {
+  @apply border-gray-700;
+}
+
+.footerSection {
+  @apply flex items-center justify-between;
+}

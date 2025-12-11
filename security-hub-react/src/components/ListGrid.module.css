@@ -1,0 +1,20 @@
+@import 'tailwindcss';
+
+.grid {
+  @apply grid gap-4 
+         grid-cols-[repeat(auto-fill,minmax(250px,1fr))];
+}
+
+.card {
+  @apply p-4 rounded-lg border border-gray-300 
+         bg-white shadow-sm hover:shadow-md
+         transition-all;
+}
+
+:global(.dark) .card {
+  @apply border-gray-700 bg-gray-800;
+}
+
+.card:hover {
+  @apply border-green-500;
+}

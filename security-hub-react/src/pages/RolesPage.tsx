@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ListGrid } from '../components/ListGrid';
+import { PageSection } from '../components/PageSection';
 import { SearchBox } from '../components/SearchBox';
 import { useRoles } from '../hooks/useRoles';
 import { type Role } from '../services/roleService';
@@ -19,16 +20,16 @@ function RolesPage() {
     .filter((role: Role) => (appId ? role.applicationId === appId : true));
 
   return (
-    <section className="app-section">
-      <h2>Roles</h2>
-
-      <SearchBox
-        label="Filter by role:"
-        placeholder="Search roles..."
-        value={searchTerm}
-        onChange={setSearchTerm}
-      />
-
+    <PageSection
+      title="Roles"
+      actions={
+        <SearchBox
+          label="Filter by role:"
+          placeholder="Search roles..."
+          value={searchTerm}
+          onChange={setSearchTerm}
+        />
+      }>
       {isLoading && <p>Loading roles...</p>}
       {error && <p style={{ color: '#f97373' }}>{error}</p>}
 
@@ -43,7 +44,7 @@ function RolesPage() {
           </>
         )}
       />}
-    </section>
+    </PageSection>
   );
 }
 

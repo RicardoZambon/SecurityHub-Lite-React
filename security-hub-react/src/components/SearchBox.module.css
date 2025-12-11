@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+.root {
+  @apply flex items-center gap-2 w-full;
+}
+
+.label {
+  @apply text-sm font-medium text-gray-600 whitespace-nowrap;
+}
+
+:global(.dark) .label {
+  @apply text-gray-300;
+}
+
+.input {
+  @apply flex-1 px-3 py-2 rounded-lg border bg-white text-gray-900
+         border-gray-300 
+         placeholder-gray-400
+         focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500
+         transition-all duration-200;
+}
+
+:global(.dark) .input {
+  @apply bg-gray-800 text-gray-100 border-gray-700
+         placeholder-gray-500;
+}
+
+.icon {
+  @apply text-gray-500;
+}
+
+:global(.dark) .icon {
+  @apply text-gray-400;
+}

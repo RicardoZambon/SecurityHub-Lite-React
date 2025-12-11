@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+.section {
+  @apply w-full flex flex-col gap-4 mb-6;
+}
+
+.titleRow {
+  @apply flex items-center justify-between;
+}
+
+.title {
+  @apply text-2xl font-semibold text-gray-800;
+}
+
+:global(.dark) .title {
+  @apply text-gray-100;
+}
+
+.actions {
+  @apply flex items-center gap-3;
+}
+
+.content {
+  @apply w-full;
+}
