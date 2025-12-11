@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ApplicationsList } from '../components/ApplicationsList';
+import { ListGrid } from '../components/ListGrid';
 import { SearchBox } from '../components/SearchBox';
 import { useApplications } from '../hooks/useApplications';
 import { type Application } from '../services/applicationService';
@@ -26,7 +26,14 @@ function ApplicationsPage() {
       {isLoading && <p>Loading applications...</p>}
       {error && <p style={{ color: '#f97373' }}>{error}</p>}
 
-      {!isLoading && !error && <ApplicationsList applications={filteredApplications} />}
+      {!isLoading && !error && <ListGrid
+        items={filteredApplications}
+        renderItem={(app: Application) => (
+          <>
+            <div style={{ fontWeight: 600 }}>{app.name}</div>
+          </>
+        )}
+      />}
     </section>
   )
 }
