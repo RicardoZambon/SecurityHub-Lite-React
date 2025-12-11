@@ -51,3 +51,42 @@ body {
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
+
+.app-header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #1f2937;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.app-nav {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.app-nav-link {
+  font-size: 0.9rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  color: #9ca3af;
+  text-decoration: none;
+  background-color: rgba(15, 23, 42, 0.8);
+  transition: background-color 120ms ease-out, color 120ms ease-out,
+    border-color 120ms ease-out, transform 80ms ease-out;
+
+  &:hover {
+    background-color: rgba(30, 64, 175, 0.9);
+    color: #e5e7eb;
+    transform: translateY(-1px);
+  }
+}
+
+.app-nav-link-active {
+  border-color: #22c55e;
+  background-color: rgba(21, 128, 61, 0.25);
+  color: #bbf7d0;
+}
