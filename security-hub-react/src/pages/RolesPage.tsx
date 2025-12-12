@@ -5,6 +5,7 @@ import { PageSection } from '../components/PageSection';
 import { SearchBox } from '../components/SearchBox';
 import { SelectedBadge } from '../components/SelectedBadge';
 import { useApplications } from '../hooks/useApplications';
+import { useBreadcrumbs } from '../hooks/useBreadcrumbs';
 import { useRoles } from '../hooks/useRoles';
 import type { Application } from '../services/applicationService';
 import { type Role } from '../services/roleService';
@@ -16,19 +17,11 @@ function RolesPage() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const appId: string | null = searchParams.get('appId');
-  const selectedApp : Application | undefined = applications.find(a => a.id === appId);
+  const selectedApp: Application | undefined = applications.find(a => a.id === appId);
 
-const breadcrumbs = selectedApp
-  ? [
-      { label: "Home", to: "/" },
-      { label: "Applications", to: "/applications" },
-      { label: selectedApp.name, to: `/applications?appId=${selectedApp.id}` },
-      { label: "Roles" }
-    ]
-  : [
-      { label: "Home", to: "/" },
-      { label: "Roles" }
-    ];
+  const dynamicCrumbs = selectedApp
+    ? [{ label: selectedApp.name, to: `/applications?appId=${appId}` }]
+    : [];
 
   const filteredRoles: Role[] = roles
     .filter((role: Role) =>
@@ -39,7 +32,8 @@ const breadcrumbs = selectedApp
   return (
     <PageSection
       title="Roles"
-      breadcrumbs={breadcrumbs}
+      breadcrumbs={useBreadcrumbs(dynamicCrumbs)}
+      showBackButton={!!appId}
       actions={
         <SearchBox
           label="Filter by role:"

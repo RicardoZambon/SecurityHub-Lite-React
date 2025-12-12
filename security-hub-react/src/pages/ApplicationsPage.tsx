@@ -4,6 +4,7 @@ import { PageSection } from '../components/PageSection';
 import { SearchBox } from '../components/SearchBox';
 import { useApplications } from '../hooks/useApplications';
 import { type Application } from '../services/applicationService';
+import { useBreadcrumbs } from '../hooks/useBreadcrumbs';
 
 function ApplicationsPage() {
   const { applications, isLoading, error } = useApplications();
@@ -16,10 +17,7 @@ function ApplicationsPage() {
   return (
     <PageSection
       title="Applications"
-      breadcrumbs={[
-        { label: 'Home', to: '/' },
-        { label: 'Applications' },
-      ]}
+      breadcrumbs={useBreadcrumbs()}
       actions={
         <SearchBox
           label="Filter by name:"

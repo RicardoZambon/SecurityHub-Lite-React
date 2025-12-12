@@ -1,36 +1,46 @@
 @import "tailwindcss";
 
 .root {
-  @apply flex items-center gap-2 text-sm mb-4;
+  @apply flex items-center gap-2 text-sm mb-4 animate-fadeIn;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out;
 }
 
 .crumbWrapper {
-  @apply flex items-center gap-2;
+  @apply flex items-center gap-1;
 }
 
-/* Links */
+.crumbIcon {
+  @apply text-gray-500;
+}
+:global(.dark) .crumbIcon {
+  @apply text-gray-300;
+}
+
 .crumbLink {
   @apply text-gray-600 hover:text-green-600 transition-colors;
 }
-
 :global(.dark) .crumbLink {
   @apply text-gray-300 hover:text-green-400;
 }
 
-/* Item atual */
 .crumbCurrent {
-  @apply font-semibold text-gray-900;
+  @apply px-2 py-0.5 rounded bg-green-100 text-green-800 font-semibold;
 }
-
 :global(.dark) .crumbCurrent {
-  @apply text-gray-100;
+  @apply bg-green-900/50 text-green-300;
 }
 
-/* Separador "/" */
 .separator {
-  @apply text-gray-400 select-none;
+  @apply text-gray-400 mx-1;
 }
-
 :global(.dark) .separator {
   @apply text-gray-500;
 }

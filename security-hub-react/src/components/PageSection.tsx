@@ -1,4 +1,5 @@
 import React from "react";
+import { BackButton } from './BackButton';
 import { Breadcrumbs, type Crumb } from './Breadcrumbs';
 import styles from "./PageSection.module.css";
 
@@ -7,13 +8,15 @@ type PageSectionProps = {
   actions?: React.ReactNode,
   children: React.ReactNode,
   breadcrumbs?: Crumb[],
+  showBackButton?: boolean,
 }
 
 export function PageSection({
   title,
   actions,
   children,
-  breadcrumbs
+  breadcrumbs,
+  showBackButton = false
 }: PageSectionProps) {
   return (
     <section className={styles.section}>
@@ -23,6 +26,7 @@ export function PageSection({
       )}
 
       <div className={styles.titleRow}>
+        {showBackButton && <BackButton />}
         <h2 className={styles.title}>{title}</h2>
 
         {actions && (
