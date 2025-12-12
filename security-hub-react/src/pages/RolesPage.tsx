@@ -3,15 +3,20 @@ import { useSearchParams } from 'react-router-dom';
 import { ListGrid } from '../components/ListGrid';
 import { PageSection } from '../components/PageSection';
 import { SearchBox } from '../components/SearchBox';
+import { SelectedBadge } from '../components/SelectedBadge';
+import { useApplications } from '../hooks/useApplications';
 import { useRoles } from '../hooks/useRoles';
+import type { Application } from '../services/applicationService';
 import { type Role } from '../services/roleService';
 
 function RolesPage() {
   const { roles, isLoading, error } = useRoles();
+  const { applications } = useApplications();
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const appId = searchParams.get('appId');
+  const appId: string | null = searchParams.get('appId');
+  const selectedApp : Application | undefined = applications.find(a => a.id === appId);
 
   const filteredRoles: Role[] = roles
     .filter((role: Role) =>
@@ -30,6 +35,14 @@ function RolesPage() {
           onChange={setSearchTerm}
         />
       }>
+
+      {selectedApp && (
+        <SelectedBadge
+          name={selectedApp.name}
+          onClear={() => setSearchParams({})}
+        />
+      )}
+
       {isLoading && <p>Loading roles...</p>}
       {error && <p style={{ color: '#f97373' }}>{error}</p>}
 
