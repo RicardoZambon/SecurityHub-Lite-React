@@ -18,6 +18,18 @@ function RolesPage() {
   const appId: string | null = searchParams.get('appId');
   const selectedApp : Application | undefined = applications.find(a => a.id === appId);
 
+const breadcrumbs = selectedApp
+  ? [
+      { label: "Home", to: "/" },
+      { label: "Applications", to: "/applications" },
+      { label: selectedApp.name, to: `/applications?appId=${selectedApp.id}` },
+      { label: "Roles" }
+    ]
+  : [
+      { label: "Home", to: "/" },
+      { label: "Roles" }
+    ];
+
   const filteredRoles: Role[] = roles
     .filter((role: Role) =>
       role.name.toLowerCase().includes(searchTerm.toLowerCase().trim()),
@@ -27,6 +39,7 @@ function RolesPage() {
   return (
     <PageSection
       title="Roles"
+      breadcrumbs={breadcrumbs}
       actions={
         <SearchBox
           label="Filter by role:"

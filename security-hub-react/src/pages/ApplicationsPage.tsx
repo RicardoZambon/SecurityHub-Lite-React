@@ -16,6 +16,10 @@ function ApplicationsPage() {
   return (
     <PageSection
       title="Applications"
+      breadcrumbs={[
+        { label: 'Home', to: '/' },
+        { label: 'Applications' },
+      ]}
       actions={
         <SearchBox
           label="Filter by name:"
