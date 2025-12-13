@@ -26,8 +26,8 @@ export function PageSection({
   const breadcrumbs: Crumb[] = useBreadcrumbs(extraBreadcrumbs);
   const currentRoute: Crumb = useCurrentRoute();
 
-  icon ||= currentRoute.icon;
-  title ||= currentRoute.label;
+  icon ||= currentRoute?.icon;
+  title ||= currentRoute?.label;
 
   return (
     <section className={styles.section}>
