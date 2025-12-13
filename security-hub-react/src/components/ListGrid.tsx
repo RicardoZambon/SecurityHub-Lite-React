@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import type { BaseUseReturn } from '../types/baseUseReturn';
+import type { EntityList } from '../types/entityList';
 import styles from './ListGrid.module.css';
 
 export type LisGridColumn<T> = {
@@ -13,7 +13,7 @@ export type LisGridColumn<T> = {
 
 type ListGridProps<T> = {
   columns: LisGridColumn<T>[],
-  useItems: BaseUseReturn<T>,
+  useItems: EntityList<T>,
   getLink?: (item: T) => string | null,
 };
 

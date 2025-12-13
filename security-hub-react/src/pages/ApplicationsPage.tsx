@@ -1,8 +1,7 @@
 import { ListGrid, type LisGridColumn } from '../components/ListGrid';
 import { PageSection } from '../components/PageSection';
 import { SearchBox } from '../components/SearchBox';
-import { useApplications } from '../hooks/useApplications';
-import { useBreadcrumbs } from '../hooks/useBreadcrumbs';
+import { useApplications } from '../hooks/entities/useApplications';
 import { type Application } from '../services/applicationService';
 
 function ApplicationsPage() {
@@ -15,7 +14,6 @@ function ApplicationsPage() {
   return (
     <PageSection
       title="Applications"
-      breadcrumbs={useBreadcrumbs()}
       actions={
         <SearchBox
           label="Filter by name:"

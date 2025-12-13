@@ -4,11 +4,11 @@ import { ListGrid, type LisGridColumn } from '../components/ListGrid';
 import { PageSection } from '../components/PageSection';
 import { SearchBox } from '../components/SearchBox';
 import { SelectedBadge } from '../components/SelectedBadge';
-import { useApplications } from '../hooks/useApplications';
-import { useBreadcrumbs } from '../hooks/useBreadcrumbs';
-import { useRoles } from '../hooks/useRoles';
+import { useApplications } from '../hooks/entities/useApplications';
+import { useRoles } from '../hooks/entities/useRoles';
 import type { Application } from '../services/applicationService';
 import { type Role } from '../services/roleService';
+import type { Crumb } from '../components/Breadcrumbs';
 
 function RolesPage() {
   const { items: applications } = useApplications();
@@ -23,7 +23,7 @@ function RolesPage() {
 
   const selectedApp: Application | undefined = applications?.find((a: Application) => a.id === appId);
 
-  const dynamicCrumbs = selectedApp
+  const dynamicCrumbs: Crumb[] = selectedApp
     ? [{ label: selectedApp.name, to: `/applications?appId=${appId}` }]
     : [];
 
@@ -35,7 +35,7 @@ function RolesPage() {
   return (
     <PageSection
       title="Roles"
-      breadcrumbs={useBreadcrumbs(dynamicCrumbs)}
+      extraBreadcrumbs={dynamicCrumbs}
       showBackButton={!!appId}
       actions={
         <SearchBox

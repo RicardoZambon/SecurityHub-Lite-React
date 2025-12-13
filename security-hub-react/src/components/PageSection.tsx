@@ -2,12 +2,13 @@ import React from "react";
 import { BackButton } from './BackButton';
 import { Breadcrumbs, type Crumb } from './Breadcrumbs';
 import styles from "./PageSection.module.css";
+import { useBreadcrumbs } from '../hooks/breadcrumbs/useBreadcrumbs';
 
 type PageSectionProps = {
   title: string,
   actions?: React.ReactNode,
   children: React.ReactNode,
-  breadcrumbs?: Crumb[],
+  extraBreadcrumbs?: Crumb[],
   showBackButton?: boolean,
 }
 
@@ -15,9 +16,11 @@ export function PageSection({
   title,
   actions,
   children,
-  breadcrumbs,
+  extraBreadcrumbs,
   showBackButton = false
 }: PageSectionProps) {
+  const breadcrumbs = useBreadcrumbs(extraBreadcrumbs);
+
   return (
     <section className={styles.section}>
 

@@ -5,7 +5,7 @@
 }
 
 .titleRow {
-  @apply flex items-center justify-between gap-4 mb-4;
+  @apply flex items-center justify-between gap-4;
 }
 
 .titleGroup {

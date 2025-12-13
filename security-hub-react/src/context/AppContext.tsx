@@ -6,8 +6,8 @@ export type AppState = {
   applications?: Application[],
   roles?: Role[],
 
-  errorApplications: string | null,
-  errorRoles: string | null,
+  errorApplications: string | undefined,
+  errorRoles: string | undefined,
 
   refreshApplications: () => Promise<void>,
   refreshRoles: () => Promise<void>,
@@ -18,18 +18,18 @@ const AppContext: React.Context<AppState | undefined> = createContext<AppState |
 export function AppProvider({ children }: { children: React.ReactNode }) {
   // Applications state
   const [applications, setApplications] = useState<Application[] | undefined>();
-  const [errorApplications, setErrorApplications] = useState<string | null>(null);
+  const [errorApplications, setErrorApplications] = useState<string | undefined>();
 
   // Roles state
   const [roles, setRoles] = useState<Role[] | undefined>();
-  const [errorRoles, setErrorRoles] = useState<string | null>(null);
+  const [errorRoles, setErrorRoles] = useState<string | undefined>();
 
   // Load Applications once
   async function refreshApplications() {
     try {
-      const data = await fetchApplications();
+      const data: Application[] = await fetchApplications();
       setApplications(data);
-      setErrorApplications(null);
+      setErrorApplications(undefined);
     } catch {
       setErrorApplications('Failed to load applications');
     }
@@ -38,19 +38,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   // Load Roles once
   async function refreshRoles() {
     try {
-      const data = await fetchRoles();
+      const data: Role[] = await fetchRoles();
       setRoles(data);
-      setErrorRoles(null);
+      setErrorRoles(undefined);
     } catch {
       setErrorRoles('Failed to load roles');
     }
   }
-
-  // Load both automatically on app start
-  useEffect(() => {
-    refreshApplications();
-    refreshRoles();
-  }, [])
 
   return (
     <AppContext.Provider
