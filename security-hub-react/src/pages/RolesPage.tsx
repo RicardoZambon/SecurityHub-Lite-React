@@ -24,8 +24,8 @@ function RolesPage() {
     : [];
 
   const columns: LisGridColumn<Application>[] = [
-    { property: 'name', header: 'Role Name', width: '200px' },
-    { property: 'applicationName', header: 'Application', width: '200px' },
+    { property: 'name', header: 'Role Name' },
+    { property: 'applicationName', header: 'Application'},
   ];
 
   const filteredRoles: Role[] = roles

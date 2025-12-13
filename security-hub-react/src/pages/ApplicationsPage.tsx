@@ -11,7 +11,7 @@ function ApplicationsPage() {
   const [searchTerm, setSearchTerm] = useState('');
 
   const columns: LisGridColumn<Application>[] = [
-    { property: 'name', header: 'Application Name', width: '200px' },
+    { property: 'name', header: 'Application Name' },
   ];
 
   const filteredApplications: Application[] = applications.filter((app: Application) =>
