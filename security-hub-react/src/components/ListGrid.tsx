@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import type { EntityList } from '../types/entityList';
 import styles from './ListGrid.module.css';
 import { RefreshButton } from './buttons/RefreshButton';
@@ -14,11 +13,20 @@ export type LisGridColumn<T> = {
 
 type ListGridProps<T> = {
   columns: LisGridColumn<T>[],
-  useItems: EntityList<T>,
-  getLink?: (item: T) => string | null,
+  customButtons?: React.ReactNode,
+  useEntityList: EntityList<T>,
 };
 
-export function ListGrid<T>({ columns, useItems, getLink }: ListGridProps<T>) {
+export function ListGrid<T>({
+  columns,
+  customButtons,
+  useEntityList
+}: ListGridProps<T>) {
+  // Clona os customButtons e injeta o selectedItem como prop
+  const customButtonsWithProps = customButtons && React.isValidElement(customButtons)
+    ? React.cloneElement(customButtons, { selectedItem: useEntityList.selectedItem } as any)
+    : customButtons;
+
   const gridColumnsTemplateStyle: string[] = columns.map(col => `minmax(${col.minWidth || 0}, ${col.maxWidth || '1fr'})`);
   gridColumnsTemplateStyle.push('minmax(18px, auto)'); // For the last empty column to take remaining space and avoid the scrollbar overlaying content
 
@@ -26,10 +34,12 @@ export function ListGrid<T>({ columns, useItems, getLink }: ListGridProps<T>) {
     <div className={styles.gridContainer}>
       <div className={styles.buttonsContainer}>
         <RefreshButton
-          refreshFunc={() => { useItems.refresh(); }}
-          isDisabled={useItems.isLoading}
-          isLoading={useItems.isFetching && !useItems.isLoading}
+          refreshFunc={() => { useEntityList.refresh(); }}
+          isDisabled={useEntityList.isLoading}
+          isLoading={useEntityList.isFetching && !useEntityList.isLoading}
         />
+
+        {customButtonsWithProps}
       </div>
       <div className={styles.grid} style={{ gridTemplateColumns: gridColumnsTemplateStyle.join(' ') }}>
         <div className={styles.header}>
@@ -42,43 +52,29 @@ export function ListGrid<T>({ columns, useItems, getLink }: ListGridProps<T>) {
         </div>
 
         <div className={styles.body}>
-          {useItems.error && <p style={{ color: '#f97373' }}>{useItems.error}</p>}
+          {useEntityList.error && <p style={{ color: '#f97373' }}>{useEntityList.error}</p>}
 
-          {!useItems.error && useItems.isLoading && <div className={styles.row}>
+          {!useEntityList.error && useEntityList.isLoading && <div className={styles.row}>
             <div className={styles.loading}>Loading...</div>
           </div>}
 
-          {!useItems.isLoading && !useItems.error && useItems.displayedItems?.map((item: T, index: number) => (
-            <div className={styles.row} key={index}>
-              {columns.map((col, colIndex) => {
-                const link: string | null = getLink ? getLink(item) : null;
-                const content: React.ReactNode = cell(item, col);
-
-                return link ? (
-                  <Link key={colIndex} to={link} className={styles.link}>
-                    {content}
-                  </Link>
-                ) : (
-                  <React.Fragment key={colIndex}>
-                    {content}
-                  </React.Fragment>
-                );
-              })}
+          {!useEntityList.isLoading && !useEntityList.error && useEntityList.displayedItems?.map((item: T, index: number) => (
+            <div className={`${styles.row} ${useEntityList.selectedItem === item ? styles.selected : ''}`} key={index}>
+              {columns.map((col, colIndex) => (
+                <div
+                  key={colIndex}
+                  className={styles.cell}
+                  onClick={() => useEntityList.setSelectedItem(item)}>
+                  {col.renderItem ?
+                    col.renderItem(item)
+                    : (item as any)[col.property]
+                  }
+                </div>
+              ))}
             </div>
           ))}
         </div>
       </div>
-    </div>
-  );
-}
-
-function cell<T>(item: T, column: LisGridColumn<T>): React.ReactNode {
-  return (
-    <div className={styles.cell}>
-      {column.renderItem ?
-        column.renderItem(item)
-        : (item as any)[column.property]
-      }
     </div>
   );
 }

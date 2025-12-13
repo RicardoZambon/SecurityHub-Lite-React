@@ -5,21 +5,21 @@ import { ListGrid, type LisGridColumn } from '../../components/ListGrid';
 import { PageSection } from '../../components/PageSection';
 import { SearchBox } from '../../components/SearchBox';
 import { SelectedBadge } from '../../components/SelectedBadge';
-import { useApplications } from '../../hooks/entities/useApplications';
-import { useRoles } from '../../hooks/entities/useRoles';
+import { useListApplications } from '../../hooks/entities/useListApplications';
+import { useListRoles } from '../../hooks/entities/useListRoles';
 import type { Application } from '../../services/applicationService';
 import { type Role } from '../../services/roleService';
 
 function RolesPage() {
-  const { items: applications } = useApplications();
-  const rolesHook = useRoles();
+  const { items: applications } = useListApplications();
+  const rolesListHook = useListRoles();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const appId: string | null = searchParams.get('appId');
 
   useEffect(() => {
-    rolesHook.setFilter('applicationId', appId);
-  }, [appId, rolesHook.setFilter]);
+    rolesListHook.setFilter('applicationId', appId);
+  }, [appId, rolesListHook.setFilter]);
 
   const selectedApp: Application | undefined = applications?.find((a: Application) => a.id === appId);
 
@@ -40,8 +40,8 @@ function RolesPage() {
         <SearchBox
           label="Filter by role:"
           placeholder="Search roles..."
-          value={rolesHook.filter['name'] || ''}
-          onChange={(value) => rolesHook.setFilter('name', value)}
+          value={rolesListHook.filter['name'] || ''}
+          onChange={(value) => rolesListHook.setFilter('name', value)}
         />
       }>
 
@@ -54,7 +54,7 @@ function RolesPage() {
 
       {<ListGrid
         columns={columns}
-        useItems={rolesHook}
+        useEntityList={rolesListHook}
       />}
     </PageSection>
   );

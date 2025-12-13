@@ -6,5 +6,7 @@ export type EntityList<T> = {
   isLoading: boolean,
   items: T[] | undefined,
   refresh: () => Promise<void>,
+  selectedItem?: T,
   setFilter: (key: string, value?: string | null) => void,
+  setSelectedItem: (item: T | undefined) => void,
 }

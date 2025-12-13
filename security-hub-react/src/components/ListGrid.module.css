@@ -7,7 +7,7 @@
 
 /* BUTTONS CONTAINER */
 .buttonsContainer {
-  @apply flex flex-wrap gap-2 p-4 bg-gray-50 border border-gray-200 rounded-lg shadow-sm;
+  @apply flex flex-wrap gap-2 p-2 bg-gray-50 border border-gray-200 rounded-lg shadow-sm;
 }
 
 :global(.dark) .buttonsContainer {
@@ -51,19 +51,36 @@
 /* ROW */
 .row {
   @apply grid grid-cols-subgrid col-span-full
-         bg-white transition-colors;
+         bg-white transition-colors
+         cursor-pointer;
+}
+
+.row.selected {
+  @apply bg-slate-100 border-l-4 border-l-slate-500;
 }
 
 :global(.dark) .row {
   @apply bg-gray-900;
 }
 
+:global(.dark) .row.selected {
+  @apply bg-slate-800/50 border-l-slate-500;
+}
+
 .row:hover {
   @apply bg-gray-50;
 }
 
+.row.selected:hover {
+  @apply bg-slate-200;
+}
+
 :global(.dark) .row:hover {
   @apply bg-gray-800;
+}
+
+:global(.dark) .row.selected:hover {
+  @apply bg-slate-700/50;
 }
 
 /* CELL */
