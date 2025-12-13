@@ -1,24 +1,24 @@
-import { useCallback, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { fetchRoles, type Role } from '../../services/roleService';
-import type { EntityList } from '../../types/entityList';
+import { useCallback, useEffect, useState } from 'react';
 import { getSelectedId, setSelectedId } from '../../lib/queryClient';
+import { fetchUsers, type User } from '../../services/userService';
+import type { EntityList } from '../../types/entityList';
 
-const STORE_KEY = 'roles';
+const STORE_KEY = 'users';
 
-export function useListRoles(): EntityList<Role> {
+export function useListUsers(): EntityList<User> {
   const { data: items, error, isLoading, isFetching, refetch } = useQuery({
-    queryKey: ['roles'],
-    queryFn: fetchRoles,
+    queryKey: [STORE_KEY],
+    queryFn: fetchUsers,
   });
 
   const [filter, setFilter] = useState<Record<string, string | null | undefined>>({});
-  const [displayedItems, setDisplayedItems] = useState<Role[] | undefined>(items);
-
+  const [displayedItems, setDisplayedItems] = useState<User[] | undefined>(items);
+  
   const [, forceUpdate] = useState({});
-
+  
   const selectedId = getSelectedId(STORE_KEY);
-  const selectedItem = items?.find(role => role.id === selectedId);
+  const selectedItem = items?.find(user => user.id === selectedId);
 
   useEffect(() => {
     if (!items) {
@@ -28,15 +28,10 @@ export function useListRoles(): EntityList<Role> {
 
     let filtered = items;
 
-    const applicationId = filter['applicationId'];
-    if (applicationId) {
-      filtered = filtered.filter((role: Role) => role.applicationId === applicationId);
-    }
-
     const name = filter['name'];
     if (name) {
-      filtered = filtered.filter((role: Role) =>
-        role.name.toLowerCase().includes(name.toLowerCase().trim())
+      filtered = filtered.filter((user: User) =>
+        user.name.toLowerCase().includes(name.toLowerCase().trim())
       );
     }
 
@@ -50,7 +45,7 @@ export function useListRoles(): EntityList<Role> {
     }));
   }, []);
 
-  const handleSelection = useCallback((item: Role | undefined) => {
+  const handleSelection = useCallback((item: User | undefined) => {
     setSelectedId(STORE_KEY, item?.id);
     forceUpdate({});
   }, []);

@@ -1,21 +1,10 @@
 import { QueryClient } from '@tanstack/react-query';
 
-// Store de seleção global (persiste durante toda a sessão)
-type SelectionStore = {
-  selectedApplicationId?: string;
-  selectedRoleId?: string;
-};
+const selectionStore: { [key: string]: string | undefined } = {};
 
-const selectionStore: SelectionStore = {};
-
-export const getSelectedApplicationId = () => selectionStore.selectedApplicationId;
-export const setSelectedApplicationId = (id?: string) => {
-  selectionStore.selectedApplicationId = id;
-};
-
-export const getSelectedRoleId = () => selectionStore.selectedRoleId;
-export const setSelectedRoleId = (id?: string) => {
-  selectionStore.selectedRoleId = id;
+export const getSelectedId = (key: string) => selectionStore[key];
+export const setSelectedId = (key: string, id?: string) => {
+  selectionStore[key] = id;
 };
 
 // Configuração do QueryClient

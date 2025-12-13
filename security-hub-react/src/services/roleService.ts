@@ -19,6 +19,6 @@ export function fetchRoles(): Promise<Role[]> {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(MOCK_ROLES);
-    }, 1200);
+    }, Math.random() * 2000);
   });
 }

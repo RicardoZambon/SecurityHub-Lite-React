@@ -13,7 +13,7 @@ export function fetchApplications(): Promise<Application[]> {
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve(MOCK_APPLICATIONS);
-        }, 1200); // Simulate network delay
+        }, Math.random() * 2000);
     });
 }
 
@@ -22,6 +22,6 @@ export function getApplicationById(id: string): Promise<Application | undefined>
         setTimeout(() => {
             const app = MOCK_APPLICATIONS.find(application => application.id === id);
             resolve(app);
-        }, 1200); // Simulate network delay
+        }, Math.random() * 2000);
     });
 }

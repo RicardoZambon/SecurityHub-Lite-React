@@ -2,27 +2,24 @@ import { useCallback, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchApplications, type Application } from '../../services/applicationService';
 import type { EntityList } from '../../types/entityList';
-import { getSelectedApplicationId, setSelectedApplicationId } from '../../lib/queryClient';
+import { getSelectedId, setSelectedId } from '../../lib/queryClient';
+
+const STORE_KEY = 'applications';
 
 export function useListApplications(): EntityList<Application> {
-  // React Query gerencia o fetch, cache, loading e error automaticamente
   const { data: items, error, isLoading, isFetching, refetch } = useQuery({
-    queryKey: ['applications'], // Identificador único para o cache
-    queryFn: fetchApplications,  // Função que busca os dados
+    queryKey: [STORE_KEY],
+    queryFn: fetchApplications,
   });
 
-  // Estado local para filtros e items filtrados
   const [filter, setFilter] = useState<Record<string, string | null | undefined>>({});
   const [displayedItems, setDisplayedItems] = useState<Application[] | undefined>(items);
-  
-  // Força re-render quando a seleção muda
+
   const [, forceUpdate] = useState({});
-  
-  // Recupera selectedItem do store global
-  const selectedId = getSelectedApplicationId();
+
+  const selectedId = getSelectedId(STORE_KEY);
   const selectedItem = items?.find(app => app.id === selectedId);
 
-  // Atualiza displayedItems quando items ou filter mudam
   useEffect(() => {
     if (!items) {
       setDisplayedItems(undefined);
@@ -41,7 +38,6 @@ export function useListApplications(): EntityList<Application> {
     setDisplayedItems(filtered);
   }, [items, filter]);
 
-  // Função memoizada para atualizar filtros
   const handleSetFilter = useCallback((key: string, value?: string | null) => {
     setFilter(prevFilter => ({
       ...prevFilter,
@@ -50,11 +46,10 @@ export function useListApplications(): EntityList<Application> {
   }, []);
 
   const handleSelection = useCallback((item: Application | undefined) => {
-    setSelectedApplicationId(item?.id);
-    forceUpdate({}); // Força re-render
+    setSelectedId(STORE_KEY, item?.id);
+    forceUpdate({});
   }, []);
 
-  // Wrapper para refetch que retorna Promise<void>
   const refresh = useCallback(async () => {
     await refetch();
   }, [refetch]);

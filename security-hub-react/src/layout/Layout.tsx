@@ -1,8 +1,23 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, type RouteObject } from 'react-router-dom';
+import type { Crumb } from '../components/Breadcrumbs';
 import { ThemeSwitcher } from '../components/ThemeSwitcher';
+import { ROUTES } from '../router';
 import styles from './Layout.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export function Layout() {
+  const routes = ROUTES;
+
+  const crumbs: Crumb[] = ROUTES[0]
+    .children
+    .filter(r => r.handle?.title && !r.index)
+    .map((m: RouteObject) => ({
+      icon: m.handle?.icon,
+      label: m.handle!.title!,
+      to: m.path!,
+    }));
+  console.log('Crumbs:', crumbs, routes);
+
   return (
     <div className={styles.layoutContainer}>
       <aside className={styles.sidebar}>
@@ -15,7 +30,24 @@ export function Layout() {
        <div className={styles.nav}>
           <div className={styles.sectionTitle}>Management</div>
 
-          <NavLink
+          {crumbs.map((crumb: Crumb) => {
+            return (
+              <NavLink
+              key={crumb.to}
+              to={crumb.to}
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.navLink} ${styles.navLinkActive}`
+                  : styles.navLink
+              }
+            >
+              {crumb.icon && <FontAwesomeIcon className={styles.icon} icon={crumb.icon}></FontAwesomeIcon>}
+              {crumb.label}
+            </NavLink>
+            );
+          })}
+
+          {/* <NavLink
             to="/applications"
             className={({ isActive }) =>
               isActive
@@ -35,7 +67,7 @@ export function Layout() {
             }
           >
             Roles
-          </NavLink>
+          </NavLink> */}
         </div>
 
         <div className={styles.footer}>

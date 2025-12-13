@@ -5,7 +5,7 @@ import styles from "./Breadcrumbs.module.css"
 
 export type Crumb = {
   label: string,
-  to?: string,
+  to: string,
   icon?: any,
 }
 
