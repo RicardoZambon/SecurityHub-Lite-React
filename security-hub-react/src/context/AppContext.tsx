@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import { fetchApplications, type Application } from '../services/applicationService'
-import { fetchRoles, type Role } from '../services/roleService'
+import React, { createContext, useContext, useState } from 'react';
+import { fetchApplications, type Application } from '../services/applicationService';
+import { fetchRoles, type Role } from '../services/roleService';
 
 export type AppState = {
   applications?: Application[],
