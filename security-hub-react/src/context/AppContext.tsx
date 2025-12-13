@@ -3,11 +3,8 @@ import { fetchApplications, type Application } from '../services/applicationServ
 import { fetchRoles, type Role } from '../services/roleService'
 
 export type AppState = {
-  applications: Application[],
-  roles: Role[],
-
-  isLoadingApplications: boolean,
-  isLoadingRoles: boolean,
+  applications?: Application[],
+  roles?: Role[],
 
   errorApplications: string | null,
   errorRoles: string | null,
@@ -16,44 +13,36 @@ export type AppState = {
   refreshRoles: () => Promise<void>,
 }
 
-const AppContext = createContext<AppState | undefined>(undefined);
+const AppContext: React.Context<AppState | undefined> = createContext<AppState | undefined>(undefined);
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
   // Applications state
-  const [applications, setApplications] = useState<Application[]>([]);
-  const [isLoadingApplications, setIsLoadingApplications] = useState(true);
+  const [applications, setApplications] = useState<Application[] | undefined>();
   const [errorApplications, setErrorApplications] = useState<string | null>(null);
 
   // Roles state
-  const [roles, setRoles] = useState<Role[]>([]);
-  const [isLoadingRoles, setIsLoadingRoles] = useState(true);
+  const [roles, setRoles] = useState<Role[] | undefined>();
   const [errorRoles, setErrorRoles] = useState<string | null>(null);
 
   // Load Applications once
   async function refreshApplications() {
     try {
-      setIsLoadingApplications(true);
       const data = await fetchApplications();
       setApplications(data);
       setErrorApplications(null);
     } catch {
       setErrorApplications('Failed to load applications');
-    } finally {
-      setIsLoadingApplications(false);
     }
   }
 
   // Load Roles once
   async function refreshRoles() {
     try {
-      setIsLoadingRoles(true);
       const data = await fetchRoles();
       setRoles(data);
       setErrorRoles(null);
     } catch {
       setErrorRoles('Failed to load roles');
-    } finally {
-      setIsLoadingRoles(false);
     }
   }
 
@@ -68,9 +57,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       value={{
         applications,
         roles,
-
-        isLoadingApplications,
-        isLoadingRoles,
 
         errorApplications,
         errorRoles,

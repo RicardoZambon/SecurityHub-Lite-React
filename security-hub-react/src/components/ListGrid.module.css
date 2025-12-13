@@ -61,6 +61,11 @@
   @apply text-gray-200;
 }
 
+.loading {
+  @apply col-span-full text-gray-500 italic
+         flex items-center p-3;
+}
+
 /* LINK */
 .link {
   @apply block w-full h-full;

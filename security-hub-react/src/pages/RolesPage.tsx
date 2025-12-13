@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ListGrid, type LisGridColumn } from '../components/ListGrid';
 import { PageSection } from '../components/PageSection';
@@ -11,28 +11,26 @@ import type { Application } from '../services/applicationService';
 import { type Role } from '../services/roleService';
 
 function RolesPage() {
-  const { roles, isLoading, error } = useRoles();
-  const { applications } = useApplications();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { items: applications } = useApplications();
+  const rolesHook = useRoles();
 
+  const [searchParams, setSearchParams] = useSearchParams();
   const appId: string | null = searchParams.get('appId');
-  const selectedApp: Application | undefined = applications.find(a => a.id === appId);
+
+  useEffect(() => {
+    rolesHook.setFilter('applicationId', appId);
+  }, [appId, rolesHook.setFilter]);
+
+  const selectedApp: Application | undefined = applications?.find((a: Application) => a.id === appId);
 
   const dynamicCrumbs = selectedApp
     ? [{ label: selectedApp.name, to: `/applications?appId=${appId}` }]
     : [];
 
-  const columns: LisGridColumn<Application>[] = [
+  const columns: LisGridColumn<Role>[] = [
     { property: 'name', header: 'Role Name' },
-    { property: 'applicationName', header: 'Application'},
+    { property: 'applicationName', header: 'Application' },
   ];
-
-  const filteredRoles: Role[] = roles
-    .filter((role: Role) =>
-      role.name.toLowerCase().includes(searchTerm.toLowerCase().trim()),
-    )
-    .filter((role: Role) => (appId ? role.applicationId === appId : true));
 
   return (
     <PageSection
@@ -43,8 +41,8 @@ function RolesPage() {
         <SearchBox
           label="Filter by role:"
           placeholder="Search roles..."
-          value={searchTerm}
-          onChange={setSearchTerm}
+          value={rolesHook.filter['name'] || ''}
+          onChange={(value) => rolesHook.setFilter('name', value)}
         />
       }>
 
@@ -55,12 +53,9 @@ function RolesPage() {
         />
       )}
 
-      {isLoading && <p>Loading roles...</p>}
-      {error && <p style={{ color: '#f97373' }}>{error}</p>}
-
-      {!isLoading && !error && <ListGrid
+      {<ListGrid
         columns={columns}
-        items={filteredRoles}
+        useItems={rolesHook}
       />}
     </PageSection>
   );

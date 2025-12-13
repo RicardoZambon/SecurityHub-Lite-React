@@ -1,22 +1,16 @@
-import { useState } from 'react';
 import { ListGrid, type LisGridColumn } from '../components/ListGrid';
 import { PageSection } from '../components/PageSection';
 import { SearchBox } from '../components/SearchBox';
 import { useApplications } from '../hooks/useApplications';
-import { type Application } from '../services/applicationService';
 import { useBreadcrumbs } from '../hooks/useBreadcrumbs';
+import { type Application } from '../services/applicationService';
 
 function ApplicationsPage() {
-  const { applications, isLoading, error } = useApplications();
-  const [searchTerm, setSearchTerm] = useState('');
+  const applicationsHook = useApplications();
 
   const columns: LisGridColumn<Application>[] = [
     { property: 'name', header: 'Application Name' },
   ];
-
-  const filteredApplications: Application[] = applications.filter((app: Application) =>
-    app.name.toLowerCase().includes(searchTerm.toLowerCase().trim()),
-  );
 
   return (
     <PageSection
@@ -26,17 +20,14 @@ function ApplicationsPage() {
         <SearchBox
           label="Filter by name:"
           placeholder="Search applications..."
-          value={searchTerm}
-          onChange={setSearchTerm}
+          value={applicationsHook.filter['name'] || ''}
+          onChange={(value) => applicationsHook.setFilter('name', value)}
         />
       }
     >
-      {isLoading && <p>Loading applications...</p>}
-      {error && <p style={{ color: '#f97373' }}>{error}</p>}
-
-      {!isLoading && !error && <ListGrid
+      {<ListGrid
         columns={columns}
-        items={filteredApplications}
+        useItems={applicationsHook}
         getLink={app => `/roles?appId=${app.id}`}
       />}
     </PageSection>
