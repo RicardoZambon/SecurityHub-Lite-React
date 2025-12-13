@@ -1,4 +1,3 @@
-import { faTags } from '@fortawesome/free-solid-svg-icons';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import type { Crumb } from '../components/Breadcrumbs';

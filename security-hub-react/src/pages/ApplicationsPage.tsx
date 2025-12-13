@@ -1,4 +1,3 @@
-import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { ListGrid, type LisGridColumn } from '../components/ListGrid';
 import { PageSection } from '../components/PageSection';
 import { SearchBox } from '../components/SearchBox';
