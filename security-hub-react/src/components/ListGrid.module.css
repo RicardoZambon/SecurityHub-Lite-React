@@ -1,20 +1,67 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
+/* GRID CONTAINER */
 .grid {
-  @apply grid gap-4 
-         grid-cols-[repeat(auto-fill,minmax(250px,1fr))];
+  @apply grow grid border rounded-lg overflow-hidden shadow-sm
+         grid-rows-[auto_1fr]
+         bg-white border-gray-300;
 }
 
-.card {
-  @apply p-4 rounded-lg border border-gray-300 
-         bg-white shadow-sm hover:shadow-md
-         transition-all;
+:global(.dark) .grid {
+  @apply bg-gray-900 border-gray-700;
 }
 
-:global(.dark) .card {
-  @apply border-gray-700 bg-gray-800;
+/* HEADER */
+.header {
+  @apply grid font-semibold text-xs uppercase tracking-wide
+         p-3 bg-gray-50 border-b border-gray-300
+         col-span-full grid-cols-subgrid text-gray-600;
 }
 
-.card:hover {
-  @apply border-green-500;
+:global(.dark) .header {
+  @apply bg-gray-800 border-gray-700 text-gray-300;
+}
+
+/* BODY */
+.body {
+  @apply grid col-span-full grid-cols-subgrid
+         auto-rows-[3rem]
+         overflow-y-auto overflow-x-hidden
+         divide-y divide-gray-200;
+}
+
+:global(.dark) .body {
+  @apply divide-gray-700;
+}
+
+/* ROW */
+.row {
+  @apply grid grid-cols-subgrid col-span-full
+         bg-white transition-colors;
+}
+
+:global(.dark) .row {
+  @apply bg-gray-900;
+}
+
+.row:hover {
+  @apply bg-gray-50;
+}
+
+:global(.dark) .row:hover {
+  @apply bg-gray-800;
+}
+
+/* CELL */
+.cell {
+  @apply p-3 flex items-center text-sm text-gray-800;
+}
+
+:global(.dark) .cell {
+  @apply text-gray-200;
+}
+
+/* LINK */
+.link {
+  @apply block w-full h-full;
 }

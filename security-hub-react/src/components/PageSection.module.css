@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .section {
-  @apply w-full flex flex-col gap-4 mb-6;
+  @apply flex grow w-full flex flex-col gap-4;
 }
 
 .titleRow {
@@ -26,5 +26,5 @@
 }
 
 .content {
-  @apply w-full;
+  @apply flex grow w-full overflow-y-auto flex-col;
 }

@@ -1,35 +1,68 @@
-import React, { type JSX } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './ListGrid.module.css';
 
+export type LisGridColumn<T> = {
+  property: string,
+  header: string,
+  minWidth?: string,
+  maxWidth?: string,
+  renderItem?: (item: T) => React.ReactNode,
+}
+
 type ListGridProps<T> = {
+  columns: LisGridColumn<T>[],
   items: T[],
-  renderItem: (item: T) => React.ReactNode,
   getLink?: (item: T) => string | null,
 };
 
-export function ListGrid<T>({ items, renderItem, getLink }: ListGridProps<T>) {
+export function ListGrid<T>({ columns, items, getLink }: ListGridProps<T>) {
+  const gridColumnsTemplateStyle: string[] = columns.map(col => `minmax(${col.minWidth || 0}, ${col.maxWidth || '1fr'})`);
+  gridColumnsTemplateStyle.push('minmax(18px, auto)'); // For the last empty column to take remaining space and avoid the scrollbar overlaying content
+
   return (
-    <div className={styles.grid}>
-      {items.map((item, index) => {
-        const link: string | null = getLink ? getLink(item) : null
-
-        const content: JSX.Element = (
-          <div className={styles.card}>
-            {renderItem(item)}
-          </div>
-        )
-
-        return link ? (
-          <Link key={index} to={link} className="block">
-            {content}
-          </Link>
-        ) : (
+    <div className={styles.grid} style={{ gridTemplateColumns: gridColumnsTemplateStyle.join(' ') }}>
+      <div className={styles.header}>
+        {columns.map((col: LisGridColumn<T>, index: number) => (
           <div key={index}>
-            {content}
+            {col.header}
           </div>
-        )
-      })}
+
+        ))}
+        <div></div>
+      </div>
+
+      <div className={styles.body}>
+        {items.map((item: T, index: number) => (
+          <div className={styles.row} key={index}>
+            {columns.map((col, colIndex) => {
+              const link: string | null = getLink ? getLink(item) : null;
+              const content: React.ReactNode = cell(item, col);
+
+              return link ? (
+                <Link key={colIndex} to={link} className={styles.link}>
+                  {content}
+                </Link>
+              ) : (
+                <React.Fragment key={colIndex}>
+                  {content}
+                </React.Fragment>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function cell<T>(item: T, column: LisGridColumn<T>): React.ReactNode {
+  return (
+    <div className={styles.cell}>
+      {column.renderItem ?
+        column.renderItem(item)
+        : (item as any)[column.property]
+      }
     </div>
   );
 }

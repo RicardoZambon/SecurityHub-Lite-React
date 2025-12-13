@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ListGrid } from '../components/ListGrid';
+import { ListGrid, type LisGridColumn } from '../components/ListGrid';
 import { PageSection } from '../components/PageSection';
 import { SearchBox } from '../components/SearchBox';
 import { useApplications } from '../hooks/useApplications';
@@ -9,6 +9,10 @@ import { useBreadcrumbs } from '../hooks/useBreadcrumbs';
 function ApplicationsPage() {
   const { applications, isLoading, error } = useApplications();
   const [searchTerm, setSearchTerm] = useState('');
+
+  const columns: LisGridColumn<Application>[] = [
+    { property: 'name', header: 'Application Name', width: '200px' },
+  ];
 
   const filteredApplications: Application[] = applications.filter((app: Application) =>
     app.name.toLowerCase().includes(searchTerm.toLowerCase().trim()),
@@ -31,13 +35,9 @@ function ApplicationsPage() {
       {error && <p style={{ color: '#f97373' }}>{error}</p>}
 
       {!isLoading && !error && <ListGrid
+        columns={columns}
         items={filteredApplications}
         getLink={app => `/roles?appId=${app.id}`}
-        renderItem={(app: Application) => (
-          <>
-            <div style={{ fontWeight: 600 }}>{app.name}</div>
-          </>
-        )}
       />}
     </PageSection>
   )

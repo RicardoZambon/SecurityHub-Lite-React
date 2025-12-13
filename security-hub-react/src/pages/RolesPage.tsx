@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ListGrid } from '../components/ListGrid';
+import { ListGrid, type LisGridColumn } from '../components/ListGrid';
 import { PageSection } from '../components/PageSection';
 import { SearchBox } from '../components/SearchBox';
 import { SelectedBadge } from '../components/SelectedBadge';
@@ -22,6 +22,11 @@ function RolesPage() {
   const dynamicCrumbs = selectedApp
     ? [{ label: selectedApp.name, to: `/applications?appId=${appId}` }]
     : [];
+
+  const columns: LisGridColumn<Application>[] = [
+    { property: 'name', header: 'Role Name', width: '200px' },
+    { property: 'applicationName', header: 'Application', width: '200px' },
+  ];
 
   const filteredRoles: Role[] = roles
     .filter((role: Role) =>
@@ -54,15 +59,8 @@ function RolesPage() {
       {error && <p style={{ color: '#f97373' }}>{error}</p>}
 
       {!isLoading && !error && <ListGrid
+        columns={columns}
         items={filteredRoles}
-        renderItem={(role: Role) => (
-          <>
-            <div style={{ fontWeight: 600 }}>{role.name}</div>
-            <div style={{ fontSize: '0.8rem', color: '#9ca3af' }}>
-              {role.applicationName}
-            </div>
-          </>
-        )}
       />}
     </PageSection>
   );
