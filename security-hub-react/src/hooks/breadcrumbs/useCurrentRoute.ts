@@ -7,9 +7,9 @@ export function useCurrentRoute(): Crumb {
   const crumbs: Crumb[] = matches
     .filter((m: RouteObject) => m.handle?.title)
     .map((m: CustomRouteObject) => ({
+      icon: m.handle!.icon,
       label: m.handle!.title!,
       to: m.pathname,
-      icon: m.handle!.icon,
     }));
 
   return crumbs[crumbs.length - 1];
