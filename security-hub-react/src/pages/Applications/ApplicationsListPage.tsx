@@ -1,8 +1,8 @@
-import { ListGrid, type LisGridColumn } from '../components/ListGrid';
-import { PageSection } from '../components/PageSection';
-import { SearchBox } from '../components/SearchBox';
-import { useApplications } from '../hooks/entities/useApplications';
-import { type Application } from '../services/applicationService';
+import { ListGrid, type LisGridColumn } from '../../components/ListGrid';
+import { PageSection } from '../../components/PageSection';
+import { SearchBox } from '../../components/SearchBox';
+import { useApplications } from '../../hooks/entities/useApplications';
+import { type Application } from '../../services/applicationService';
 
 function ApplicationsPage() {
   const applicationsHook = useApplications();

@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import type { Crumb } from '../components/Breadcrumbs';
-import { ListGrid, type LisGridColumn } from '../components/ListGrid';
-import { PageSection } from '../components/PageSection';
-import { SearchBox } from '../components/SearchBox';
-import { SelectedBadge } from '../components/SelectedBadge';
-import { useApplications } from '../hooks/entities/useApplications';
-import { useRoles } from '../hooks/entities/useRoles';
-import type { Application } from '../services/applicationService';
-import { type Role } from '../services/roleService';
+import type { Crumb } from '../../components/Breadcrumbs';
+import { ListGrid, type LisGridColumn } from '../../components/ListGrid';
+import { PageSection } from '../../components/PageSection';
+import { SearchBox } from '../../components/SearchBox';
+import { SelectedBadge } from '../../components/SelectedBadge';
+import { useApplications } from '../../hooks/entities/useApplications';
+import { useRoles } from '../../hooks/entities/useRoles';
+import type { Application } from '../../services/applicationService';
+import { type Role } from '../../services/roleService';
 
 function RolesPage() {
   const { items: applications } = useApplications();

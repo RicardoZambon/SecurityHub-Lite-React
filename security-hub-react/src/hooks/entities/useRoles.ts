@@ -1,19 +1,26 @@
-import { useCallback } from 'react';
-import { useAppContext, type AppState } from '../../context/AppContext';
-import type { Role } from '../../services/roleService';
+import { useCallback, useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { fetchRoles, type Role } from '../../services/roleService';
 import type { EntityList } from '../../types/entityList';
-import { useEntityListBase } from '../base/useEntityListBase';
 
 export function useRoles(): EntityList<Role> {
-    const ctx: AppState = useAppContext();
+    // React Query gerencia o fetch, cache, loading e error automaticamente
+    const { data: items, error, isLoading, isFetching, refetch } = useQuery({
+        queryKey: ['roles'], // Identificador único para o cache
+        queryFn: fetchRoles,  // Função que busca os dados
+    });
 
-    // Ensure roles are loaded.
-    if (ctx.roles === undefined)
-    {
-        ctx.refreshRoles();
-    }
+    // Estado local para filtros e items filtrados
+    const [filter, setFilter] = useState<Record<string, string | null | undefined>>({});
+    const [displayedItems, setDisplayedItems] = useState<Role[] | undefined>(items);
 
-    const filterRoles = useCallback((items: Role[], filter: Record<string, string | null | undefined>) => {
+    // Atualiza displayedItems quando items ou filter mudam
+    useEffect(() => {
+        if (!items) {
+            setDisplayedItems(undefined);
+            return;
+        }
+
         let filtered = items;
         
         const applicationId = filter['applicationId'];
@@ -28,8 +35,30 @@ export function useRoles(): EntityList<Role> {
             );
         }
 
-        return filtered;
+        setDisplayedItems(filtered);
+    }, [items, filter]);
+
+    // Função memoizada para atualizar filtros
+    const handleSetFilter = useCallback((key: string, value?: string | null) => {
+        setFilter(prevFilter => ({
+            ...prevFilter,
+            [key]: value
+        }));
     }, []);
 
-    return useEntityListBase(ctx.roles, ctx.errorRoles, ctx.refreshRoles, filterRoles);
+    // Wrapper para refetch que retorna Promise<void>
+    const refresh = useCallback(async () => {
+        await refetch();
+    }, [refetch]);
+
+    return {
+        displayedItems,
+        error: error?.message,
+        filter,
+        isFetching,
+        isLoading,
+        items,
+        refresh,
+        setFilter: handleSetFilter,
+    };
 }
