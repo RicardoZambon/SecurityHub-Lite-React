@@ -1,5 +1,7 @@
+import { faTags } from '@fortawesome/free-solid-svg-icons';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import type { Crumb } from '../components/Breadcrumbs';
 import { ListGrid, type LisGridColumn } from '../components/ListGrid';
 import { PageSection } from '../components/PageSection';
 import { SearchBox } from '../components/SearchBox';
@@ -8,7 +10,6 @@ import { useApplications } from '../hooks/entities/useApplications';
 import { useRoles } from '../hooks/entities/useRoles';
 import type { Application } from '../services/applicationService';
 import { type Role } from '../services/roleService';
-import type { Crumb } from '../components/Breadcrumbs';
 
 function RolesPage() {
   const { items: applications } = useApplications();
@@ -34,7 +35,6 @@ function RolesPage() {
 
   return (
     <PageSection
-      title="Roles"
       extraBreadcrumbs={dynamicCrumbs}
       showBackButton={!!appId}
       actions={

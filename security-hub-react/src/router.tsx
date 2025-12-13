@@ -1,4 +1,4 @@
-import { faHome, faLayerGroup, faTags } from '@fortawesome/free-solid-svg-icons';
+import { faLayerGroup, faTags } from '@fortawesome/free-solid-svg-icons';
 import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "./layout/Layout";
 import ApplicationsPage from "./pages/ApplicationsPage";
@@ -12,17 +12,17 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <ApplicationsPage />,
-        handle: { breadcrumb: "Home", icon: faHome },
+        handle: { breadcrumb: "Home" },
       },
       {
         path: "applications",
         element: <ApplicationsPage />,
-        handle: { breadcrumb: "Applications", icon: faLayerGroup },
+        handle: { title: "Applications", icon: faLayerGroup },
       },
       {
         path: "roles",
         element: <RolesPage />,
-        handle: { breadcrumb: "Roles", icon: faTags },
+        handle: { title: "Roles", icon: faTags },
       },
     ],
   },

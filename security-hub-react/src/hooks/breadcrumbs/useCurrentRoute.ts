@@ -1,7 +1,7 @@
 import { useMatches, type CustomRouteObject, type RouteObject } from "react-router-dom";
 import type { Crumb } from '../../components/Breadcrumbs';
 
-export function useBreadcrumbs(extraCrumbs?: Crumb[]): Crumb[] {
+export function useCurrentRoute(): Crumb {
   const matches: CustomRouteObject[] = useMatches() as CustomRouteObject[];
 
   const crumbs: Crumb[] = matches
@@ -9,11 +9,8 @@ export function useBreadcrumbs(extraCrumbs?: Crumb[]): Crumb[] {
     .map((m: CustomRouteObject) => ({
       label: m.handle!.title!,
       to: m.pathname,
+      icon: m.handle!.icon,
     }));
 
-  if (extraCrumbs) {
-    return [...crumbs, ...extraCrumbs];
-  }
-
-  return crumbs;
+  return crumbs[crumbs.length - 1];
 }
