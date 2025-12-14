@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { useListView } from '../../context/ListContext';
-import type { EntityList } from '../../types/entityList';
+import { useListView } from '../context/ListContext';
+import type { EntityList } from '../types/entityList';
 import styles from './ListGrid.module.css';
 
 export type LisGridColumn<T> = {

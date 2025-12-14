@@ -2,8 +2,8 @@ import React from 'react';
 import type { EntityList } from '../types/entityList';
 import type { GridSelection } from '../types/gridSelection';
 import styles from './ButtonsContainer.module.css';
-import NewButton from './ListGrids/buttons/NewButton';
-import RefreshButton from './ListGrids/buttons/RefreshButton';
+import NewButton from './buttons/NewButton';
+import RefreshButton from './buttons/RefreshButton';
 
 type ButtonsContainerProps<T> = {
   buttons?: React.ReactNode,

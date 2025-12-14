@@ -1,5 +1,5 @@
-import RefreshButton from '../../components/ListGrids/buttons/RefreshButton';
-import ListGrid, { type LisGridColumn } from '../../components/ListGrids/ListGrid';
+import RefreshButton from '../../components/buttons/RefreshButton';
+import ListGrid, { type LisGridColumn } from '../../components/ListGrid';
 import SearchBox from '../../components/SearchBox';
 import ListView from '../../components/Views/ListView';
 import { useListUsers } from '../../hooks/entities/useListUsers';

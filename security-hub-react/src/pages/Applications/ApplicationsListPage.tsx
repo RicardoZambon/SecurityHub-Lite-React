@@ -1,6 +1,6 @@
-import NewButton from '../../components/ListGrids/buttons/NewButton';
-import RefreshButton from '../../components/ListGrids/buttons/RefreshButton';
-import ListGrid, { type LisGridColumn } from '../../components/ListGrids/ListGrid';
+import NewButton from '../../components/buttons/NewButton';
+import RefreshButton from '../../components/buttons/RefreshButton';
+import ListGrid, { type LisGridColumn } from '../../components/ListGrid';
 import SearchBox from '../../components/SearchBox';
 import ListView from '../../components/Views/ListView';
 import { useListApplications } from '../../hooks/entities/useListApplications';
