@@ -8,7 +8,7 @@ export default function RolesForm() {
 
   return (
     <>
-      <FormRegion title="Roles Details">
+      <FormRegion title="Role Details">
         <Select
           displayControlName="applicationName"
           formControlName="applicationId"

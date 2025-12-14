@@ -1,14 +1,16 @@
 import { faLayerGroup, faTags, faUser } from '@fortawesome/free-solid-svg-icons';
 import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "./layout/Layout";
+import ApplicationsDetailsPage from './pages/Applications/ApplicationsDetailsPage';
 import ApplicationsListPage from './pages/Applications/ApplicationsListPage';
-import ApplicationsDetailsPage from './pages/Applications/ApplictionsDetailsPage';
-import ApplicationsNewPage from './pages/Applications/ApplictionsNewPage';
+import ApplicationsNewPage from './pages/Applications/ApplicationsNewPage';
 import HomePage from './pages/HomePage';
 import RolesDetailsPage from './pages/Roles/RolesDetailsPage';
 import RolesPage from "./pages/Roles/RolesListPage";
 import RolesNewPage from './pages/Roles/RolesNewPage';
+import UsersDetailsPage from './pages/Users/USersDetailsPage';
 import UsersPage from './pages/Users/UsersListPage';
+import UsersNewPage from './pages/Users/UsersNewPage';
 
 export const ROUTES = [
   {
@@ -51,12 +53,12 @@ export const ROUTES = [
           {
             path: "new",
             element: <RolesNewPage />,
-            handle: { title: "New application", icon: faLayerGroup },
+            handle: { title: "New role", icon: faTags },
           },
           {
             path: ":id",
             element: <RolesDetailsPage />,
-            handle: { title: "Edit application", icon: faLayerGroup },
+            handle: { title: "Edit role", icon: faTags },
           },
         ]
       },
@@ -67,6 +69,16 @@ export const ROUTES = [
           {
             path: "",
             element: <UsersPage />,
+          },
+          {
+            path: "new",
+            element: <UsersNewPage />,
+            handle: { title: "New user", icon: faUser },
+          },
+          {
+            path: ":id",
+            element: <UsersDetailsPage />,
+            handle: { title: "Edit user", icon: faUser },
           },
         ]
       },

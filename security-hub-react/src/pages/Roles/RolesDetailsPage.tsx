@@ -1,4 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import EditButton from '../../components/buttons/EditButton';
 import NewButton from '../../components/buttons/NewButton';
@@ -11,21 +10,16 @@ import RolesForm from './RolesForm';
 
 export default function RolesDetailsPage() {
   const { id } = useParams<{ id: string }>();
-  const queryClient = useQueryClient();
 
   return (
     <DataView
       buttons={
         <>
-          <NewButton
-            isDisabled={false}
-            path="/roles"
-          />
+          <NewButton path="/roles" />
 
           <EditButton />
 
           <SaveButton
-            isDisabled={false}
             onSave={saveRole}
             storeKey='roles'
             validator={useValidateRole}

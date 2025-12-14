@@ -6,7 +6,7 @@ export type Application = {
 export function fetchApplications(): Promise<Application[]> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(readApplications());
+      resolve(readApplications().sort((a, b) => a.name!.localeCompare(b.name!)));
     }, Math.random() * 2000);
   });
 }

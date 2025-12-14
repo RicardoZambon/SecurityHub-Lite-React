@@ -8,7 +8,7 @@ export type Role = {
 export function fetchRoles(): Promise<Role[]> {
   return new Promise(resolve => {
     setTimeout(() => {
-      resolve(readRoles());
+      resolve(readRoles().sort((a, b) => a.name.localeCompare(b.name)));
     }, Math.random() * 2000);
   });
 }

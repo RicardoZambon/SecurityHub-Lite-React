@@ -1,5 +1,6 @@
 import { useDataView } from '../../context/DataViewContext';
-import styles from "./Input.module.css";
+import styles from "./SharedFields.module.css";
+import Validations from './Validations';
 
 type SelectProps = {
   displayControlName: string;
@@ -31,7 +32,7 @@ export default function Select({
 
   return (
     <div className={styles.inputContainer}>
-      <label className={label} htmlFor={formControlName}>{label}:</label>
+      <label className={styles.label} htmlFor={formControlName}>{label}:</label>
       <div>
         {mode === "view" ? (
           <>
@@ -60,11 +61,8 @@ export default function Select({
             ))}
           </select>
         )}
-        <div>
-          {errors && errors[formControlName] && (
-            <span className={styles.errorText}>{errors[formControlName]}</span>
-          )}
-        </div>
+        
+       <Validations errors={errors} formControlName={formControlName} />
       </div>
     </div>
   );

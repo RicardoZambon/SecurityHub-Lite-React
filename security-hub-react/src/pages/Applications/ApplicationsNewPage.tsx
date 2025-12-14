@@ -11,15 +11,11 @@ export default function ApplicationsNewPage() {
     <DataView
       buttons={
         <>
-          <NewButton
-            isDisabled={false}
-            path="/applications"
-          />
+          <NewButton path="/applications" />
 
           <EditButton />
 
           <SaveButton
-            isDisabled={false}
             onSave={saveApplication}
             storeKey='applications'
             validator={useValidateApplication}

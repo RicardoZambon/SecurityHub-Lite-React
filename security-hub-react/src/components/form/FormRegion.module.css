@@ -14,5 +14,5 @@
 }
 
 :global(.dark) .title {
-  @apply text-gray-200;
+  @apply text-gray-300;
 }

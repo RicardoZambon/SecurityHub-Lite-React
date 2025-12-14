@@ -1,11 +1,14 @@
 @import "tailwindcss";
 
 .inputContainer {
-  @apply col-span-full grid grid-cols-subgrid;
+  @apply col-span-full grid grid-cols-subgrid items-center;
 }
 
 .label {
-  @apply font-medium text-gray-700;
+  @apply font-semibold text-gray-700;
+}
+:global(.dark) .label {
+  @apply text-gray-500;
 }
 
 .input {
@@ -38,7 +41,7 @@
 }
 
 .errorText {
-  @apply text-red-600 text-sm mt-1;
+  @apply text-red-600 text-sm mt-1 text-sm italic;
 }
 :global(.dark) .errorText {
   @apply text-red-400;

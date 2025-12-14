@@ -1,8 +1,10 @@
+import NewButton from '../../components/buttons/NewButton';
+import OpenButton from '../../components/buttons/OpenButton';
 import RefreshButton from '../../components/buttons/RefreshButton';
 import ListGrid, { type LisGridColumn } from '../../components/ListGrid';
 import SearchBox from '../../components/SearchBox';
 import ListView from '../../components/Views/ListView';
-import { useListUsers } from '../../hooks/entities/useListUsers';
+import { useListUsers } from '../../hooks/entities/users/useListUsers';
 import type { User } from '../../services/userService';
 
 export default function UsersPage() {
@@ -27,6 +29,14 @@ export default function UsersPage() {
       }
       buttons={
         <>
+          <NewButton
+            isDisabled={isLoading}
+          />
+
+          <OpenButton
+            isDisabled={isLoading}
+          />
+          
           <RefreshButton
             refreshFunc={() => { refresh(); }}
             isDisabled={isLoading}

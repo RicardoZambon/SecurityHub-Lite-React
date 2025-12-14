@@ -1,5 +1,6 @@
 import { useDataView } from '../../context/DataViewContext';
-import styles from "./Input.module.css";
+import styles from "./SharedFields.module.css";
+import Validations from './Validations';
 
 type InputProps = {
   formControlName: string;
@@ -22,37 +23,36 @@ export default function Input({
   const hasError: boolean = errors && errors[formControlName] ? true : false;
 
   return (
-    <div className={styles.inputContainer}>
-      <label className={label} htmlFor={formControlName}>{label}:</label>
-      <div>
-        {mode === "view" ? (
-          <>
-            {!isLoading && !isFetching && (
-              <span>{value}</span>
-            )}
-            {(isLoading || isFetching) && (
-              <div className={styles.loadingValue}>
-                <div className={styles.skeleton}></div>
-              </div>
-            )}
-          </>
-        ) : (
-          <input
-            className={`${styles.input} ${hasError ? styles.inputError : ''}`}
-            disabled={isDisabled}
-            id={formControlName}
-            name={formControlName}
-            onChange={handleChange}
-            type="text"
-            value={value}
-          />
-        )}
+    <>
+      <div className={styles.inputContainer}>
+        <label className={styles.label} htmlFor={formControlName}>{label}:</label>
         <div>
-          {errors && errors[formControlName] && (
-            <span className={styles.errorText}>{errors[formControlName]}</span>
+          {mode === "view" ? (
+            <>
+              {!isLoading && !isFetching && (
+                <span>{value}</span>
+              )}
+              {(isLoading || isFetching) && (
+                <div className={styles.loadingValue}>
+                  <div className={styles.skeleton}></div>
+                </div>
+              )}
+            </>
+          ) : (
+            <input
+              className={`${styles.input} ${hasError ? styles.inputError : ''}`}
+              disabled={isDisabled}
+              id={formControlName}
+              name={formControlName}
+              onChange={handleChange}
+              type="text"
+              value={value}
+            />
           )}
         </div>
+
+        <Validations errors={errors} formControlName={formControlName} />
       </div>
-    </div>
+    </>
   );
 }

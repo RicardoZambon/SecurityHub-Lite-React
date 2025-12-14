@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
-import { fetchUsers, type User } from '../../services/userService';
-import type { EntityList } from '../../types/entityList';
+import { fetchUsers, type User } from '../../../services/userService';
+import type { EntityList } from '../../../types/entityList';
 
 const STORE_KEY = 'users';
 
