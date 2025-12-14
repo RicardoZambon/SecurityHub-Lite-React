@@ -1,13 +1,12 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink, Outlet, type RouteObject } from 'react-router-dom';
 import type { Crumb } from '../components/Breadcrumbs';
 import { ThemeSwitcher } from '../components/ThemeSwitcher';
 import { ROUTES } from '../router';
 import styles from './Layout.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
 
 export function Layout() {
-  const routes = ROUTES;
-
   const crumbs: Crumb[] = ROUTES[0]
     .children
     .filter(r => r.handle?.title && !r.index)
@@ -16,7 +15,6 @@ export function Layout() {
       label: m.handle!.title!,
       to: m.path!,
     }));
-  console.log('Crumbs:', crumbs, routes);
 
   return (
     <div className={styles.layoutContainer}>
@@ -27,47 +25,37 @@ export function Layout() {
           <div className={styles.brandSubtitle}>Admin Dashboard</div>
         </div>
 
-       <div className={styles.nav}>
+        <div className={styles.nav}>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.navLink} ${styles.navLinkActive}`
+                : styles.navLink
+            }
+          >
+            <FontAwesomeIcon className={styles.icon} icon={faHome}></FontAwesomeIcon>
+            Home
+          </NavLink>
+
           <div className={styles.sectionTitle}>Management</div>
 
           {crumbs.map((crumb: Crumb) => {
             return (
               <NavLink
-              key={crumb.to}
-              to={crumb.to}
-              className={({ isActive }) =>
-                isActive
-                  ? `${styles.navLink} ${styles.navLinkActive}`
-                  : styles.navLink
-              }
-            >
-              {crumb.icon && <FontAwesomeIcon className={styles.icon} icon={crumb.icon}></FontAwesomeIcon>}
-              {crumb.label}
-            </NavLink>
+                key={crumb.to}
+                to={crumb.to}
+                className={({ isActive }) =>
+                  isActive
+                    ? `${styles.navLink} ${styles.navLinkActive}`
+                    : styles.navLink
+                }
+              >
+                {crumb.icon && <FontAwesomeIcon className={styles.icon} icon={crumb.icon}></FontAwesomeIcon>}
+                {crumb.label}
+              </NavLink>
             );
           })}
-
-          {/* <NavLink
-            to="/applications"
-            className={({ isActive }) =>
-              isActive
-                ? `${styles.navLink} ${styles.navLinkActive}`
-                : styles.navLink
-            }
-          >
-            Applications
-          </NavLink>
-
-          <NavLink
-            to="/roles"
-            className={({ isActive }) =>
-              isActive
-                ? `${styles.navLink} ${styles.navLinkActive}`
-                : styles.navLink
-            }
-          >
-            Roles
-          </NavLink> */}
         </div>
 
         <div className={styles.footer}>

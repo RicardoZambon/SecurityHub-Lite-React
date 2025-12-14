@@ -2,6 +2,7 @@ import { faLayerGroup, faTags, faUser } from '@fortawesome/free-solid-svg-icons'
 import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "./layout/Layout";
 import ApplicationsPage from "./pages/Applications/ApplicationsListPage";
+import HomePage from './pages/HomePage';
 import RolesPage from "./pages/Roles/RolesListPage";
 import UsersPage from './pages/Users/UsersListPage';
 
@@ -12,7 +13,7 @@ export const ROUTES = [
     children: [
       {
         index: true,
-        element: <ApplicationsPage />,
+        element: <HomePage />,
         handle: { breadcrumb: "Home" },
       },
       {

@@ -1,0 +1,9 @@
+@import 'tailwindcss';
+
+.title {
+    @apply block text-2xl font-bold mb-4;
+}
+
+.subtitle {
+    @apply text-lg font-semibold mb-2;
+}
