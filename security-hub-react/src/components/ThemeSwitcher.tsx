@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTheme } from "../context/ThemeContext";
 import styles from "./ThemeSwitcher.module.css";
 
-export function ThemeSwitcher() {
+export default function ThemeSwitcher() {
   const { theme, toggleTheme } = useTheme();
 
   return (

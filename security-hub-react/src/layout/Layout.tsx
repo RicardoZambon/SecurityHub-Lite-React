@@ -1,9 +1,9 @@
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink, Outlet, type RouteObject } from 'react-router-dom';
-import type { Crumb } from '../components/Breadcrumbs';
-import { ThemeSwitcher } from '../components/ThemeSwitcher';
-import { PageProvider } from '../context/PageContext';
+import Breadcrumbs from '../components/Breadcrumbs';
+import ThemeSwitcher from '../components/ThemeSwitcher';
+import { BreadcrumbsProvider, type Crumb } from '../context/BreadcrumbsContext';
 import { ROUTES } from '../router';
 import styles from './Layout.module.css';
 
@@ -71,9 +71,11 @@ export function Layout() {
       </aside>
 
       <main className={styles.content}>
-        <PageProvider>
+        <BreadcrumbsProvider>
+          <Breadcrumbs />
+          {/* {breadcrumbs && (<Breadcrumbs items={breadcrumbs} />)} */}
           <Outlet />
-        </PageProvider>
+        </BreadcrumbsProvider>
       </main>
     </div>
   );

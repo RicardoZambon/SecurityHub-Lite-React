@@ -1,37 +1,49 @@
-import { ListGrid, type LisGridColumn } from '../../components/ListGrids/ListGrid';
-import { PageSection } from '../../components/PageSection';
-import { SearchBox } from '../../components/SearchBox';
-import { usePage } from '../../context/PageContext';
+import NewButton from '../../components/ListGrids/buttons/NewButton';
+import RefreshButton from '../../components/ListGrids/buttons/RefreshButton';
+import ListGrid, { type LisGridColumn } from '../../components/ListGrids/ListGrid';
+import SearchBox from '../../components/SearchBox';
+import ListView from '../../components/Views/ListView';
 import { useListApplications } from '../../hooks/entities/useListApplications';
 import { type Application } from '../../services/applicationService';
 import { ViewRolesButton } from './customButtons/ViewRolesButton';
 
-function ApplicationsPage() {
-  const { filter, setFilter } = usePage();
+export default function ApplicationListPage() {
+  const useApplicationsHook = useListApplications();
+  const { isLoading, isFetching, refresh } = useApplicationsHook;
 
   const columns: LisGridColumn<Application>[] = [
     { property: 'name', header: 'Application Name' },
   ];
 
   return (
-    <PageSection
+    <ListView
       actions={
         <SearchBox
           label="Filter by name:"
           placeholder="Search applications..."
-          value={filter['name'] || ''}
-          onChange={(value) => setFilter('name', value)}
+          field="name"
         />
       }
+      buttons={
+        <>
+          <NewButton
+            isDisabled={isLoading}
+          />
+
+          <RefreshButton
+            refreshFunc={() => { refresh(); }}
+            isDisabled={isLoading}
+            isLoading={isFetching && !isLoading}
+          />
+
+          <ViewRolesButton />
+        </>
+      }
     >
-      {<ListGrid
+      <ListGrid
         columns={columns}
-        customButtons={<ViewRolesButton />}
-        gridUniqueKey="applications-list-grid"
-        useEntityList={useListApplications()}
-      />}
-    </PageSection>
+        useEntityList={useApplicationsHook}
+      />
+    </ListView>
   )
 }
-
-export default ApplicationsPage;

@@ -1,19 +1,6 @@
-import { useMatches, type CustomRouteObject, type RouteObject } from "react-router-dom";
-import type { Crumb } from '../../components/Breadcrumbs';
+// import { useMatches, type CustomRouteObject, type RouteObject } from "react-router-dom";
+// import type { Crumb } from '../../components/Breadcrumbs';
 
-export function useBreadcrumbs(extraCrumbs?: Crumb[]): Crumb[] {
-  const matches: CustomRouteObject[] = useMatches() as CustomRouteObject[];
-
-  const crumbs: Crumb[] = matches
-    .filter((m: RouteObject) => m.handle?.title)
-    .map((m: CustomRouteObject) => ({
-      label: m.handle!.title!,
-      to: m.pathname,
-    }));
-
-  if (extraCrumbs) {
-    return [...crumbs, ...extraCrumbs];
-  }
-
-  return crumbs;
-}
+// export function useBreadcrumbs(extraCrumbs?: Crumb[]): Crumb[] {
+  
+// }

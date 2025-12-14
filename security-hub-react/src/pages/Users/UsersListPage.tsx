@@ -1,12 +1,13 @@
-import { ListGrid, type LisGridColumn } from '../../components/ListGrids/ListGrid';
-import { PageSection } from '../../components/PageSection';
-import { SearchBox } from '../../components/SearchBox';
-import { usePage } from '../../context/PageContext';
+import RefreshButton from '../../components/ListGrids/buttons/RefreshButton';
+import ListGrid, { type LisGridColumn } from '../../components/ListGrids/ListGrid';
+import SearchBox from '../../components/SearchBox';
+import ListView from '../../components/Views/ListView';
 import { useListUsers } from '../../hooks/entities/useListUsers';
 import type { User } from '../../services/userService';
 
-function UsersPage() {
-  const { filter, setFilter } = usePage();
+export default function UsersPage() {
+  const useUsersHook = useListUsers();
+  const { isLoading, isFetching, refresh } = useUsersHook;
 
   const columns: LisGridColumn<User>[] = [
     { property: 'name', header: 'Name' },
@@ -16,23 +17,27 @@ function UsersPage() {
   ];
 
   return (
-    <PageSection
+    <ListView
       actions={
         <SearchBox
           label="Filter by user:"
           placeholder="Search users..."
-          value={filter['name'] || ''}
-          onChange={(value) => setFilter('name', value)}
+          field="name"
         />
+      }
+      buttons={
+        <>
+          <RefreshButton
+            refreshFunc={() => { refresh(); }}
+            isDisabled={isLoading}
+            isLoading={isFetching && !isLoading}
+          />
+        </>
       }>
-
-      {<ListGrid
-        gridUniqueKey='users-list-grid'
+      <ListGrid
         columns={columns}
-        useEntityList={useListUsers()}
-      />}
-    </PageSection>
+        useEntityList={useUsersHook}
+      />
+    </ListView>
   );
 }
-
-export default UsersPage;

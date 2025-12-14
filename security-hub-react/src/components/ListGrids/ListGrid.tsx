@@ -1,10 +1,7 @@
-import React from 'react';
-import { useListGridSelection } from '../../hooks/components/useListGridSelection';
+import React, { useEffect } from 'react';
+import { useListView } from '../../context/ListContext';
 import type { EntityList } from '../../types/entityList';
-import type { GridSelection } from '../../types/gridSelection';
 import styles from './ListGrid.module.css';
-import { ListGridButtonsContainer } from './ListGridButtonsContainer';
-import { usePage } from '../../context/PageContext';
 
 export type LisGridColumn<T> = {
   property: string,
@@ -15,37 +12,38 @@ export type LisGridColumn<T> = {
 }
 
 type ListGridProps<T> = {
-  gridUniqueKey: string,
   columns: LisGridColumn<T>[],
-  customButtons?: React.ReactNode,
+  fixedFilter?: Record<string, string | null | undefined>,
   useEntityList: EntityList<T>,
 };
 
-export function ListGrid<T>({
-  gridUniqueKey,
+export default function ListGrid<T>({
   columns,
-  customButtons,
+  fixedFilter,
   useEntityList
 }: ListGridProps<T>) {
-  const gridSelection: GridSelection = useListGridSelection(gridUniqueKey);
+  const { setFilter } = useListView();
 
   const gridColumnsTemplateStyle: string[] = columns.map(col => `minmax(${col.minWidth || 0}, ${col.maxWidth || '1fr'})`);
   gridColumnsTemplateStyle.push('minmax(18px, auto)'); // For the last empty column to take remaining space and avoid the scrollbar overlaying content
 
+  useEffect(() => {
+    if (!fixedFilter) {
+      return;
+    }
+
+    Object.keys(fixedFilter).forEach(key => {
+      setFilter(key, fixedFilter[key]);
+    });
+  }, [fixedFilter]);
+
   return (
     <div className={styles.gridContainer}>
-      <ListGridButtonsContainer
-        customButtons={customButtons}
-        gridSelection={gridSelection}
-        useEntityList={useEntityList}
-      />
-
       <div className={styles.grid} style={{ gridTemplateColumns: gridColumnsTemplateStyle.join(' ') }}>
         <ListGridHeader<T> columns={columns} />
 
         <ListGridBody<T>
           columns={columns}
-          gridSelection={gridSelection}
           useEntityList={useEntityList}
         />
       </div>
@@ -68,12 +66,10 @@ function ListGridHeader<T>({ columns }: { columns: LisGridColumn<T>[] }) {
 
 function ListGridBody<T>({
   columns,
-  gridSelection,
   useEntityList
-}: { columns: LisGridColumn<T>[], gridSelection: GridSelection, useEntityList: EntityList<T> }) {
+}: { columns: LisGridColumn<T>[], useEntityList: EntityList<T> }) {
   const { items, error, isLoading, filterFn, getItemId } = useEntityList;
-  const { selectedItemId, setSelectedItem } = gridSelection;
-  const { filter } = usePage();
+  const { filter, selectedItemId } = useListView();
 
   const displayedItems = filterFn(items, filter) || [];
 
@@ -92,18 +88,18 @@ function ListGridBody<T>({
           item={item}
           itemId={getItemId(item)}
           key={index}
-          onSelect={(itemId: string) => setSelectedItem(itemId)}
         />
       ))}
     </div>
   );
 }
 
-function ListGridRow<T>({ itemId, item, columns, isSelected, onSelect }: { itemId: string, item: T, columns: LisGridColumn<T>[], isSelected?: boolean, onSelect: (itemId: string) => void }) {
+function ListGridRow<T>({ itemId, item, columns, isSelected }: { itemId: string, item: T, columns: LisGridColumn<T>[], isSelected?: boolean }) {
+  const { setSelectedItemId } = useListView();
   return (
     <div
       className={`${styles.row} ${isSelected ? styles.selected : ''}`}
-      onClick={() => onSelect(itemId)}
+      onClick={() => setSelectedItemId(itemId)}
     >
       {columns.map((col, colIndex) => (
         <ListGridCell<T>

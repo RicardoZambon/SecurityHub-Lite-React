@@ -1,6 +1,6 @@
 import style from './HomePage.module.css';
 
-function HomePage() {
+export default function HomePage() {
   return (
     <>
       <div className={style.title}>
@@ -12,5 +12,3 @@ function HomePage() {
     </>
   )
 }
-
-export default HomePage;

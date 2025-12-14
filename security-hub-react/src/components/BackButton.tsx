@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
 import styles from "./BackButton.module.css";
 
-export function BackButton() {
+export default function BackButton() {
   const navigate: NavigateFunction = useNavigate();
 
   return (

@@ -1,16 +1,12 @@
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
+import { useListView } from '../../../context/ListContext';
 import styles from './ViewRolesButton.module.css';
 
-export type ViewRolesButtonProps = {
-  selectedItemId?: number,
-}
-
-export function ViewRolesButton({
-  selectedItemId,
-}: ViewRolesButtonProps) {
+export function ViewRolesButton() {
   const navigate = useNavigate();
+  const { selectedItemId } = useListView();
 
   const handleButtonClick = () => {
     if (!selectedItemId) {

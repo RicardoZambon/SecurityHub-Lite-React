@@ -1,6 +1,6 @@
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styles from './RefreshButton.module.css';
+import styles from './Button.module.css';
 
 export type RefreshButtonProps = {
   refreshFunc: () => void,
@@ -8,7 +8,7 @@ export type RefreshButtonProps = {
   isLoading?: boolean,
 }
 
-export function RefreshButton({
+export default function RefreshButton({
   refreshFunc,
   isDisabled = false,
   isLoading = false,

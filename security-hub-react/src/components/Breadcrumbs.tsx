@@ -2,22 +2,16 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Link } from "react-router-dom"
 import styles from "./Breadcrumbs.module.css"
+import { useBreadcrumbs, type Crumb } from '../context/BreadcrumbsContext'
 
-export type Crumb = {
-  label: string,
-  to: string,
-  icon?: any,
-}
+export default function Breadcrumbs() {
+  const { breadcrumbs, extraBreadcrumbs } = useBreadcrumbs();
+  breadcrumbs.push(...(extraBreadcrumbs || []));
 
-type BreadcrumbsProps = {
-  items: Crumb[],
-}
-
-export function Breadcrumbs({ items }: BreadcrumbsProps) {
   return (
     <nav className={styles.root} aria-label="Breadcrumb">
-      {items.map((item: Crumb, idx: number) => {
-        const isLast: boolean = idx === items.length - 1
+      {breadcrumbs.map((item: Crumb, idx: number) => {
+        const isLast: boolean = idx === breadcrumbs.length - 1
 
         return (
           <div key={idx} className={styles.crumbWrapper}>

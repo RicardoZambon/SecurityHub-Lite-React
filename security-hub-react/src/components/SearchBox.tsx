@@ -1,33 +1,30 @@
+import { useListView } from '../context/ListContext';
 import styles from './SearchBox.module.css';
 
 type SearchBoxProps = {
-    label?: string;
-    placeholder?: string;
-    value: string;
-    onChange: (newValue: string) => void;
+  field: string;
+  label?: string;
+  placeholder?: string;
 };
 
-export function SearchBox({
-    label = 'Search',
-    placeholder = 'Type to filter...',
-    value,
-    onChange,
+export default function SearchBox({
+  field,
+  label = 'Search',
+  placeholder = 'Type to filter...',
 }: SearchBoxProps) {
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        onChange(event.target.value);
-    };
+  const { filter, setFilter } = useListView();
 
-    return (
-        <div className={styles.root}>
-            {label && <label className={styles.label}>{label}</label>}
+  return (
+    <div className={styles.root}>
+      {label && <label className={styles.label}>{label}</label>}
 
-            <input
-                type="text"
-                className={styles.input}
-                placeholder={placeholder}
-                value={value}
-                onChange={handleInputChange}
-            />
-        </div>
-    );
+      <input
+        className={styles.input}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setFilter('name', event.target.value) }}
+        placeholder={placeholder}
+        type="text"
+        value={filter[field] || ''}
+      />
+    </div>
+  );
 }

@@ -118,7 +118,11 @@
 /* ============================== */
 
 .content {
-  @apply flex flex-col grow overflow-y-auto bg-gray-50;
+  @apply flex py-4 flex-col grow overflow-y-auto bg-gray-50;
+}
+
+.content nav {
+  @apply px-4;
 }
 
 :global(.dark) .content {

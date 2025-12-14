@@ -1,29 +1,28 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from "react";
-import { useBreadcrumbs } from '../hooks/breadcrumbs/useBreadcrumbs';
-import { useCurrentRoute } from '../hooks/breadcrumbs/useCurrentRoute';
-import { BackButton } from './BackButton';
-import { Breadcrumbs, type Crumb } from './Breadcrumbs';
-import styles from "./PageSection.module.css";
+import { type Crumb } from '../../context/BreadcrumbsContext';
+import { useCurrentRoute } from '../../hooks/breadcrumbs/useCurrentRoute';
+import BackButton from '../BackButton';
+import { ButtonsContainer } from '../ButtonsContainer';
+import styles from "./View.module.css";
 
-type PageSectionProps = {
+export type ViewProps = {
   actions?: React.ReactNode,
+  buttons?: React.ReactNode,
   children: React.ReactNode,
-  extraBreadcrumbs?: Crumb[],
   icon?: any,
   showBackButton?: boolean,
   title?: string,
 }
 
-export function PageSection({
+export default function View({
   actions,
+  buttons,
   children,
-  extraBreadcrumbs,
   icon,
   showBackButton = false,
   title,
-}: PageSectionProps) {
-  const breadcrumbs: Crumb[] = useBreadcrumbs(extraBreadcrumbs);
+}: ViewProps) {
   const currentRoute: Crumb = useCurrentRoute();
 
   icon ||= currentRoute?.icon;
@@ -31,10 +30,9 @@ export function PageSection({
 
   return (
     <section className={styles.section}>
-      {breadcrumbs && (<Breadcrumbs items={breadcrumbs} />)}
-
       <div className={styles.titleRow}>
         {showBackButton && <BackButton />}
+
         <h2 className={styles.title}>
           {icon && (
             <FontAwesomeIcon
@@ -51,6 +49,10 @@ export function PageSection({
           </div>
         )}
       </div>
+
+      {React.isValidElement(buttons) && (
+        <ButtonsContainer buttons={buttons} />
+      )}
 
       <div className={styles.content}>
         {children}

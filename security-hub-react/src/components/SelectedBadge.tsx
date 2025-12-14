@@ -5,7 +5,7 @@ type Props = {
   onClear?: () => void,
 }
 
-export function SelectedBadge({ name, onClear }: Props) {
+export default function SelectedBadge({ name, onClear }: Props) {
   return (
     <div className={styles.badge}>
       <span className={styles.name}>{name}</span>

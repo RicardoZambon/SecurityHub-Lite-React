@@ -1,7 +1,8 @@
 import { faLayerGroup, faTags, faUser } from '@fortawesome/free-solid-svg-icons';
 import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "./layout/Layout";
-import ApplicationsPage from "./pages/Applications/ApplicationsListPage";
+import ApplicationsListPage from './pages/Applications/ApplicationsListPage';
+import ApplicationsNewPage from './pages/Applications/ApplictionsNewPage';
 import HomePage from './pages/HomePage';
 import RolesPage from "./pages/Roles/RolesListPage";
 import UsersPage from './pages/Users/UsersListPage';
@@ -18,18 +19,38 @@ export const ROUTES = [
       },
       {
         path: "applications",
-        element: <ApplicationsPage />,
         handle: { title: "Applications", icon: faLayerGroup },
+        children: [
+          {
+            path: "",
+            element: <ApplicationsListPage />,
+          },
+          {
+            path: "new",
+            element: <ApplicationsNewPage />,
+            handle: { title: "New application", icon: faLayerGroup },
+          }
+        ]
       },
       {
         path: "roles",
-        element: <RolesPage />,
         handle: { title: "Roles", icon: faTags },
+        children: [
+          {
+            path: "",
+            element: <RolesPage />,
+          },
+        ]
       },
       {
         path: "users",
-        element: <UsersPage />,
         handle: { title: "Users", icon: faUser },
+        children: [
+          {
+            path: "",
+            element: <UsersPage />,
+          },
+        ]
       },
     ],
   },
