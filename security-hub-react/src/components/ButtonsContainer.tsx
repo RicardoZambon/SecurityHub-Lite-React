@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from './ButtonsContainer.module.css';
 
-type ButtonsContainerProps<T> = {
+type ButtonsContainerProps = {
   buttons?: React.ReactNode,
 };
 
-export function ButtonsContainer<T>({
+export function ButtonsContainer({
   buttons,
-}: ButtonsContainerProps<T>) {
+}: ButtonsContainerProps) {
   return (
     <div className={styles.buttonsContainer}>
       {React.isValidElement(buttons) && buttons}
