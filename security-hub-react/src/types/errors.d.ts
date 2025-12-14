@@ -1,0 +1,1 @@
+export type Errors = { [field: string]: string } | null;

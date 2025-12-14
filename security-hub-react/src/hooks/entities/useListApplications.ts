@@ -17,14 +17,14 @@ export function useListApplications(): EntityList<Application> {
     const name = filter['name'];
     if (name) {
       items = items.filter((app: Application) =>
-        app.name.toLowerCase().includes(name.toLowerCase().trim())
+        app.name?.toLowerCase().includes(name.toLowerCase().trim())
       );
     }
 
     return items;
   }, []);
   const handleGetItemId = useCallback((item: Application) => {
-    return item?.id;
+    return item?.id || '';
   }, []);
 
   const refresh = useCallback(async () => {

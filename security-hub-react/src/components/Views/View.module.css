@@ -1,8 +1,7 @@
 @import "tailwindcss";
 
-
 .section {
-  @apply flex grow w-full flex-col gap-4 overflow-y-auto;
+  @apply pt-2 px-4 pb-4 flex grow w-full flex-col gap-4 overflow-y-auto;
 }
 
 .titleRow {
@@ -35,5 +34,12 @@
 }
 
 .content {
-  @apply flex grow w-full overflow-y-auto flex-col;
+  @apply flex grow w-full overflow-y-auto flex-col
+         border rounded-lg shadow-sm
+         grid-rows-[auto_1fr]
+         bg-white border-gray-300;
+}
+
+:global(.dark) .content {
+  @apply bg-gray-900 border-gray-700;
 }

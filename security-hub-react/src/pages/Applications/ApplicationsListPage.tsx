@@ -1,4 +1,5 @@
 import NewButton from '../../components/buttons/NewButton';
+import OpenButton from '../../components/buttons/OpenButton';
 import RefreshButton from '../../components/buttons/RefreshButton';
 import ListGrid, { type LisGridColumn } from '../../components/ListGrid';
 import SearchBox from '../../components/SearchBox';
@@ -27,6 +28,10 @@ export default function ApplicationListPage() {
       buttons={
         <>
           <NewButton
+            isDisabled={isLoading}
+          />
+
+          <OpenButton
             isDisabled={isLoading}
           />
 

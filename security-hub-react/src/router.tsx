@@ -2,6 +2,7 @@ import { faLayerGroup, faTags, faUser } from '@fortawesome/free-solid-svg-icons'
 import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "./layout/Layout";
 import ApplicationsListPage from './pages/Applications/ApplicationsListPage';
+import ApplicationsDetailsPage from './pages/Applications/ApplictionsDetailsPage';
 import ApplicationsNewPage from './pages/Applications/ApplictionsNewPage';
 import HomePage from './pages/HomePage';
 import RolesPage from "./pages/Roles/RolesListPage";
@@ -29,7 +30,12 @@ export const ROUTES = [
             path: "new",
             element: <ApplicationsNewPage />,
             handle: { title: "New application", icon: faLayerGroup },
-          }
+          },
+          {
+            path: ":id",
+            element: <ApplicationsDetailsPage />,
+            handle: { title: "Edit application", icon: faLayerGroup },
+          },
         ]
       },
       {

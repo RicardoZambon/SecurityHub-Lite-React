@@ -1,6 +1,12 @@
+import FormRegion from '../../components/form/FormRegion';
+import Input from '../../components/form/Input';
 
 export default function ApplicationsForm() {
   return (
-    <div>Applications Form</div>
+    <>
+      <FormRegion title="Application Details">
+        <Input formControlName="name" label="Name" />
+      </FormRegion>
+    </>
   );
 }

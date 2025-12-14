@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useListView } from '../context/ListContext';
+import { useListView } from '../context/ListViewContext';
 import type { EntityList } from '../types/entityList';
 import styles from './ListGrid.module.css';
 

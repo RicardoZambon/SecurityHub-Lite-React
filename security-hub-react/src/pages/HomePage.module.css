@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+.homeContainer {
+    @apply p-4;
+}
+
 .title {
     @apply block text-2xl font-bold mb-4;
 }

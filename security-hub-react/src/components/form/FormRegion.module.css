@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+.regionContainer {
+  @apply border-t border-gray-200 p-2
+         grid grid-cols-[minmax(min-content,max-content)_1fr] gap-2 items-center mb-4;
+}
+
+:global(.dark) .regionContainer {
+  @apply border-gray-700;
+}
+
+.title {
+  @apply text-lg font-semibold text-gray-800 mb-2 px-2;
+}
+
+:global(.dark) .title {
+  @apply text-gray-200;
+}

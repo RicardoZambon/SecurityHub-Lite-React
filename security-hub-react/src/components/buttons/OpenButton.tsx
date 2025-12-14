@@ -1,37 +1,36 @@
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
+import { useListView } from '../../context/ListViewContext';
 import styles from './Button.module.css';
 
-export type NewButtonProps = {
+export type OpenButtonProps = {
   isDisabled?: boolean,
-  path?: string,
 };
 
-export default function NewButton({
+export default function OpenButton({
   isDisabled = false,
-  path,
-}: NewButtonProps) {
+}: OpenButtonProps) {
   const navigate = useNavigate();
+  const { selectedItemId } = useListView();
 
   const handleButtonClick = () => {
-    let redirectPath: string  = 'new';
-    if (path && path.length > 0) {
-      redirectPath = `${path}/${redirectPath}`;
+    if (!selectedItemId) {
+      return;
     }
-    
-    navigate(redirectPath);
+
+    navigate(selectedItemId);
   };
 
   return (
     <button
       className={styles.button}
       onClick={handleButtonClick}
-      disabled={isDisabled}
+      disabled={isDisabled || !selectedItemId}
     >
-      <FontAwesomeIcon icon={faPlus} />
+      <FontAwesomeIcon icon={faEye} />
       <span className={styles.text}>
-        New
+        Open
       </span>
     </button>
   );

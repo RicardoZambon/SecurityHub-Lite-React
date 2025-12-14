@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+.form {
+  @apply grid gap-4;
+}
+
+.formContainer {
+  @apply p-4 flex grow w-full overflow-y-auto flex-col;
+}

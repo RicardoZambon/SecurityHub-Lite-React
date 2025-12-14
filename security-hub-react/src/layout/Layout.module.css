@@ -118,7 +118,7 @@
 /* ============================== */
 
 .content {
-  @apply flex p-4 gap-2 flex-col grow overflow-y-auto bg-gray-50;
+  @apply flex flex-col grow overflow-y-auto bg-gray-50;
 }
 
 :global(.dark) .content {

@@ -1,5 +1,6 @@
 import { faChevronRight, faHome } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import React from 'react'
 import { Link } from "react-router-dom"
 import { useBreadcrumbs, type Crumb } from '../context/BreadcrumbsContext'
 import { useCurrentRoute } from '../hooks/breadcrumbs/useCurrentRoute'
@@ -12,9 +13,9 @@ export default function Breadcrumbs() {
   let displayedBreadcrumbs = [...breadcrumbs, ...(extraBreadcrumbs || [])];
 
   return (
-    <nav className={styles.root} aria-label="Breadcrumb">
+    <>
       {currentPage && (
-        <>
+        <nav className={styles.root} aria-label="Breadcrumb">
           <Link to={'/'} className={styles.crumbLink}>
             <FontAwesomeIcon icon={faHome} className={styles.crumbIcon} />
           </Link>
@@ -27,16 +28,15 @@ export default function Breadcrumbs() {
             const isLast: boolean = idx === displayedBreadcrumbs.length - 1;
 
             return (
-              <>
-                <Crumb key={idx} item={item} isLast={isLast} />
+              <React.Fragment key={idx}>
+                <Crumb item={item} isLast={isLast} />
                 {!isLast && (<FontAwesomeIcon icon={faChevronRight} className={styles.separator} />)}
-              </>
+              </React.Fragment>
             );
           })}
-        </>
+        </nav>
       )}
-
-    </nav>
+    </>
   )
 }
 

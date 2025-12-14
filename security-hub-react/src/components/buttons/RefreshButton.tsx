@@ -1,4 +1,4 @@
-import { faRefresh } from '@fortawesome/free-solid-svg-icons';
+import { faRefresh, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './Button.module.css';
 
@@ -19,10 +19,7 @@ export default function RefreshButton({
       onClick={refreshFunc}
       disabled={isLoading || isDisabled}
     >
-      <FontAwesomeIcon 
-        icon={faRefresh} 
-        className={isLoading ? styles.spinning : ''}
-      />
+      <FontAwesomeIcon icon={isLoading ? faSpinner : faRefresh} className={isLoading ? styles.spinning : ''} />
       <span className={styles.text}>
         {isLoading ? 'Refreshing...' : 'Refresh'}
       </span>

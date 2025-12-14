@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .root {
-  @apply flex items-center gap-2 text-sm;
+  @apply flex items-center gap-2 text-sm px-4 pt-4;
   animation: fadeIn 0.25s ease-out;
 }
 

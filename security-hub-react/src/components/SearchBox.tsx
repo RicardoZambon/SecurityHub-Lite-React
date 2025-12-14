@@ -1,4 +1,4 @@
-import { useListView } from '../context/ListContext';
+import { useListView } from '../context/ListViewContext';
 import styles from './SearchBox.module.css';
 
 type SearchBoxProps = {
