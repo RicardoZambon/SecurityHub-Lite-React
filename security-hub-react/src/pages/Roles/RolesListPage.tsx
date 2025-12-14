@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import type { Crumb } from '../../components/Breadcrumbs';
-import { ListGrid, type LisGridColumn } from '../../components/ListGrid';
+import { ListGrid, type LisGridColumn } from '../../components/ListGrids/ListGrid';
 import { PageSection } from '../../components/PageSection';
 import { SearchBox } from '../../components/SearchBox';
 import { SelectedBadge } from '../../components/SelectedBadge';
+import { usePage } from '../../context/PageContext';
 import { useListApplications } from '../../hooks/entities/useListApplications';
 import { useListRoles } from '../../hooks/entities/useListRoles';
 import type { Application } from '../../services/applicationService';
@@ -12,19 +13,20 @@ import { type Role } from '../../services/roleService';
 
 function RolesPage() {
   const { items: applications } = useListApplications();
-  const rolesListHook = useListRoles();
-
+  const [ selectedApplication, setSelectedApplication ] = useState<Application | undefined>();
+  const { filter, setFilter } = usePage();
   const [searchParams, setSearchParams] = useSearchParams();
-  const appId: string | null = searchParams.get('appId');
 
   useEffect(() => {
-    rolesListHook.setFilter('applicationId', appId);
-  }, [appId, rolesListHook.setFilter]);
+    const appId: string | null = searchParams.get('appId');
+    setFilter('applicationId', appId);
 
-  const selectedApp: Application | undefined = applications?.find((a: Application) => a.id === appId);
+    const app: Application | undefined = applications?.find((a: Application) => a.id === appId);
+    setSelectedApplication(app);
+  }, [searchParams]);
 
-  const dynamicCrumbs: Crumb[] = selectedApp
-    ? [{ label: selectedApp.name, to: `/applications?appId=${appId}` }]
+  const dynamicCrumbs: Crumb[] = selectedApplication
+    ? [{ label: selectedApplication.name, to: `/applications?appId=${selectedApplication.id}` }]
     : [];
 
   const columns: LisGridColumn<Role>[] = [
@@ -35,26 +37,27 @@ function RolesPage() {
   return (
     <PageSection
       extraBreadcrumbs={dynamicCrumbs}
-      showBackButton={!!appId}
+      showBackButton={!!selectedApplication}
       actions={
         <SearchBox
           label="Filter by role:"
           placeholder="Search roles..."
-          value={rolesListHook.filter['name'] || ''}
-          onChange={(value) => rolesListHook.setFilter('name', value)}
+          value={filter['name'] || ''}
+          onChange={(value) => setFilter('name', value)}
         />
       }>
 
-      {selectedApp && (
+      {selectedApplication && (
         <SelectedBadge
-          name={selectedApp.name}
+          name={selectedApplication.name}
           onClear={() => setSearchParams({})}
         />
       )}
 
       {<ListGrid
+        gridUniqueKey='roles-list-grid'
         columns={columns}
-        useEntityList={rolesListHook}
+        useEntityList={useListRoles()}
       />}
     </PageSection>
   );

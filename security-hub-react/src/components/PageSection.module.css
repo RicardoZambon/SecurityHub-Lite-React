@@ -2,7 +2,7 @@
 
 
 .section {
-  @apply flex grow w-full flex-col gap-4;
+  @apply p-4 flex grow w-full flex-col gap-4 overflow-y-auto;
 }
 
 .titleRow {

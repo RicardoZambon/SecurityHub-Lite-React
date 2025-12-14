@@ -1,12 +1,13 @@
-import { ListGrid, type LisGridColumn } from '../../components/ListGrid';
+import { ListGrid, type LisGridColumn } from '../../components/ListGrids/ListGrid';
 import { PageSection } from '../../components/PageSection';
 import { SearchBox } from '../../components/SearchBox';
+import { usePage } from '../../context/PageContext';
 import { useListApplications } from '../../hooks/entities/useListApplications';
 import { type Application } from '../../services/applicationService';
 import { ViewRolesButton } from './customButtons/ViewRolesButton';
 
 function ApplicationsPage() {
-  const applicationsListHook = useListApplications();
+  const { filter, setFilter } = usePage();
 
   const columns: LisGridColumn<Application>[] = [
     { property: 'name', header: 'Application Name' },
@@ -18,15 +19,16 @@ function ApplicationsPage() {
         <SearchBox
           label="Filter by name:"
           placeholder="Search applications..."
-          value={applicationsListHook.filter['name'] || ''}
-          onChange={(value) => applicationsListHook.setFilter('name', value)}
+          value={filter['name'] || ''}
+          onChange={(value) => setFilter('name', value)}
         />
       }
     >
       {<ListGrid
         columns={columns}
         customButtons={<ViewRolesButton />}
-        useEntityList={applicationsListHook}
+        gridUniqueKey="applications-list-grid"
+        useEntityList={useListApplications()}
       />}
     </PageSection>
   )

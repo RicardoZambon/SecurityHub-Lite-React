@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+.buttonsContainer {
+  @apply flex flex-wrap gap-2 p-2 bg-white border border-gray-200 rounded-lg shadow-sm;
+}
+
+:global(.dark) .buttonsContainer {
+  @apply bg-gray-800 border-gray-700;
+}

@@ -2,16 +2,7 @@
 
 /* GRID CONTAINER */
 .gridContainer {
-  @apply flex flex-col grow w-full gap-4;
-}
-
-/* BUTTONS CONTAINER */
-.buttonsContainer {
-  @apply flex flex-wrap gap-2 p-2 bg-gray-50 border border-gray-200 rounded-lg shadow-sm;
-}
-
-:global(.dark) .buttonsContainer {
-  @apply bg-gray-800 border-gray-700;
+  @apply flex flex-col grow w-full gap-4 overflow-hidden;
 }
 
 /* GRID */

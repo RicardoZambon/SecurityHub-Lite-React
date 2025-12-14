@@ -1,58 +1,35 @@
-import { useCallback, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useCallback, useState } from 'react';
 import { fetchRoles, type Role } from '../../services/roleService';
 import type { EntityList } from '../../types/entityList';
-import { getSelectedId, setSelectedId } from '../../lib/queryClient';
 
 const STORE_KEY = 'roles';
 
 export function useListRoles(): EntityList<Role> {
   const { data: items, error, isLoading, isFetching, refetch } = useQuery({
-    queryKey: ['roles'],
+    queryKey: [STORE_KEY],
     queryFn: fetchRoles,
   });
-
-  const [filter, setFilter] = useState<Record<string, string | null | undefined>>({});
-  const [displayedItems, setDisplayedItems] = useState<Role[] | undefined>(items);
-
-  const [, forceUpdate] = useState({});
-
-  const selectedId = getSelectedId(STORE_KEY);
-  const selectedItem = items?.find(role => role.id === selectedId);
-
-  useEffect(() => {
-    if (!items) {
-      setDisplayedItems(undefined);
-      return;
-    }
-
-    let filtered = items;
+  const filterFn = useCallback((items: Role[] | undefined, filter: Record<string, string | null | undefined>) => {
+    if (!items || items.length === 0) return items;
 
     const applicationId = filter['applicationId'];
     if (applicationId) {
-      filtered = filtered.filter((role: Role) => role.applicationId === applicationId);
+      items = items.filter((role: Role) => role.applicationId === applicationId);
     }
 
     const name = filter['name'];
     if (name) {
-      filtered = filtered.filter((role: Role) =>
+      items = items.filter((role: Role) =>
         role.name.toLowerCase().includes(name.toLowerCase().trim())
       );
     }
 
-    setDisplayedItems(filtered);
-  }, [items, filter]);
-
-  const handleSetFilter = useCallback((key: string, value?: string | null) => {
-    setFilter(prevFilter => ({
-      ...prevFilter,
-      [key]: value
-    }));
+    return items;
   }, []);
 
-  const handleSelection = useCallback((item: Role | undefined) => {
-    setSelectedId(STORE_KEY, item?.id);
-    forceUpdate({});
+  const handleGetItemId = useCallback((item: Role) => {
+    return item?.id;
   }, []);
 
   const refresh = useCallback(async () => {
@@ -60,15 +37,13 @@ export function useListRoles(): EntityList<Role> {
   }, [refetch]);
 
   return {
-    displayedItems,
     error: error?.message,
-    filter,
+    getItemId: handleGetItemId,
     isFetching,
     isLoading,
     items,
     refresh,
-    selectedItem,
-    setFilter: handleSetFilter,
-    setSelectedItem: handleSelection,
+
+    filterFn,
   };
 }

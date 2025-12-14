@@ -1,10 +1,11 @@
+import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink, Outlet, type RouteObject } from 'react-router-dom';
 import type { Crumb } from '../components/Breadcrumbs';
 import { ThemeSwitcher } from '../components/ThemeSwitcher';
+import { PageProvider } from '../context/PageContext';
 import { ROUTES } from '../router';
 import styles from './Layout.module.css';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
 
 export function Layout() {
   const crumbs: Crumb[] = ROUTES[0]
@@ -70,7 +71,9 @@ export function Layout() {
       </aside>
 
       <main className={styles.content}>
-        <Outlet />
+        <PageProvider>
+          <Outlet />
+        </PageProvider>
       </main>
     </div>
   );

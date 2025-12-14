@@ -1,29 +1,21 @@
 import { QueryClient } from '@tanstack/react-query';
 
-const selectionStore: { [key: string]: string | undefined } = {};
-
-export const getSelectedId = (key: string) => selectionStore[key];
-export const setSelectedId = (key: string, id?: string) => {
-  selectionStore[key] = id;
-};
-
-// Configuração do QueryClient
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      // Quanto tempo os dados são considerados "frescos" (não precisa refetch)
-      staleTime: 5 * 60 * 1000, // 5 minutos
+      // Amount of time before data is considered outdated.
+      staleTime: 5 * 60 * 1000, // 5 minutes
       
-      // Quanto tempo manter dados no cache sem uso
-      gcTime: 10 * 60 * 1000, // 10 minutos (antigo cacheTime)
+      // Amount of time unused/inactive cache data remains in memory.
+      gcTime: 10 * 60 * 1000, // 10 minutes
       
-      // Retentar em caso de erro
+      // Number of retry attempts on failure.
       retry: 1,
       
-      // Refetch quando a janela ganha foco
+      // Refetch when window gets focused.
       refetchOnWindowFocus: false,
       
-      // Refetch quando reconecta à internet
+      // Refetch when reconnecting to the internet.
       refetchOnReconnect: true,
     },
   },

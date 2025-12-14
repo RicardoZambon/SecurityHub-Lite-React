@@ -1,10 +1,10 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from "react";
+import { useBreadcrumbs } from '../hooks/breadcrumbs/useBreadcrumbs';
+import { useCurrentRoute } from '../hooks/breadcrumbs/useCurrentRoute';
 import { BackButton } from './BackButton';
 import { Breadcrumbs, type Crumb } from './Breadcrumbs';
 import styles from "./PageSection.module.css";
-import { useBreadcrumbs } from '../hooks/breadcrumbs/useBreadcrumbs';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useCurrentRoute } from '../hooks/breadcrumbs/useCurrentRoute';
 
 type PageSectionProps = {
   actions?: React.ReactNode,
@@ -31,10 +31,7 @@ export function PageSection({
 
   return (
     <section className={styles.section}>
-
-      {breadcrumbs && (
-        <Breadcrumbs items={breadcrumbs} />
-      )}
+      {breadcrumbs && (<Breadcrumbs items={breadcrumbs} />)}
 
       <div className={styles.titleRow}>
         {showBackButton && <BackButton />}

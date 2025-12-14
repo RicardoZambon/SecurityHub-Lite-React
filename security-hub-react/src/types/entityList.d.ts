@@ -1,12 +1,12 @@
 export type EntityList<T> = {
-  displayedItems?: T[],
+  // Grid
   error: string | undefined,
-  filter: Record<string, string | null | undefined>,
+  getItemId: (item: T) => string,
   isFetching: boolean,
   isLoading: boolean,
   items: T[] | undefined,
   refresh: () => Promise<void>,
-  selectedItem?: T,
-  setFilter: (key: string, value?: string | null) => void,
-  setSelectedItem: (item: T | undefined) => void,
+
+  // Filter
+  filterFn: (items: T[] | undefined, filter: Record<string, string | null | undefined>) => T[] | undefined,
 }

@@ -1,29 +1,30 @@
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
-import type { Application } from '../../../services/applicationService';
 import styles from './ViewRolesButton.module.css';
 
 export type ViewRolesButtonProps = {
-  selectedItem?: Application,
+  selectedItemId?: number,
 }
 
 export function ViewRolesButton({
-  selectedItem,
+  selectedItemId,
 }: ViewRolesButtonProps) {
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    if (selectedItem) {
-      navigate(`/roles?appId=${selectedItem.id}`);
+  const handleButtonClick = () => {
+    if (!selectedItemId) {
+      return;
     }
+
+    navigate(`/roles?appId=${selectedItemId}`);
   };
 
   return (
     <button 
       className={styles.button} 
-      onClick={handleClick}
-      disabled={!selectedItem}
+      disabled={!selectedItemId}
+      onClick={handleButtonClick}
     >
       <FontAwesomeIcon icon={faEye} />
 
