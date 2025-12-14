@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { fetchRoles, type Role } from '../../services/roleService';
 import type { EntityList } from '../../types/entityList';
 
@@ -38,12 +38,11 @@ export function useListRoles(): EntityList<Role> {
 
   return {
     error: error?.message,
+    filterFn,
     getItemId: handleGetItemId,
     isFetching,
     isLoading,
     items,
     refresh,
-
-    filterFn,
   };
 }

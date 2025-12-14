@@ -25,22 +25,7 @@ export function BreadcrumbsProvider({ children }: { children: React.ReactNode })
       to: m.pathname,
     }));
 
-  // if (extraCrumbs) {
-  //   return [...crumbs, ...extraCrumbs];
-  // }
-
   const [extraBreadcrumbs, setExtraBreadcrumbs] = useState<Crumb[] | undefined>(undefined);
-
-  //return crumbs;
-
-  //const [filter, setFilter] = useState<Record<string, string | null | undefined>>({});  
-
-  // function handleSetFilter(key: string, value?: string | null) {
-  //   setFilter(prevFilter => ({
-  //     ...prevFilter,
-  //     [key]: value
-  //   }));
-  // }
 
   function handleSetExtraBreadcrumbs(crumbs: Crumb[]) {
     setExtraBreadcrumbs(crumbs);

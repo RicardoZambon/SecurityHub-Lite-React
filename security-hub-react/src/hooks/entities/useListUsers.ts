@@ -34,12 +34,11 @@ export function useListUsers(): EntityList<User> {
 
   return {
     error: error?.message,
+    filterFn,
     getItemId: handleGetItemId,
     isFetching,
     isLoading,
     items,
     refresh,
-
-    filterFn,
   };
 }

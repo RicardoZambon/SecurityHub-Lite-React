@@ -1,5 +1,5 @@
 import { useMatches, type CustomRouteObject, type RouteObject } from "react-router-dom";
-import type { Crumb } from '../../components/Breadcrumbs';
+import type { Crumb } from '../../context/BreadcrumbsContext';
 
 export function useCurrentRoute(): Crumb {
   const matches: CustomRouteObject[] = useMatches() as CustomRouteObject[];

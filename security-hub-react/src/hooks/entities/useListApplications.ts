@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { fetchApplications, type Application } from '../../services/applicationService';
 import type { EntityList } from '../../types/entityList';
 
@@ -33,12 +33,11 @@ export function useListApplications(): EntityList<Application> {
 
   return {
     error: error?.message,
+    filterFn,
     getItemId: handleGetItemId,
     isFetching,
     isLoading,
     items,
     refresh,
-
-    filterFn,
   };
 }

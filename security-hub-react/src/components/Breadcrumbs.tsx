@@ -1,8 +1,8 @@
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Link } from "react-router-dom"
-import styles from "./Breadcrumbs.module.css"
 import { useBreadcrumbs, type Crumb } from '../context/BreadcrumbsContext'
+import styles from "./Breadcrumbs.module.css"
 
 export default function Breadcrumbs() {
   const { breadcrumbs, extraBreadcrumbs } = useBreadcrumbs();

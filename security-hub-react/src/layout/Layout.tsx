@@ -73,7 +73,6 @@ export function Layout() {
       <main className={styles.content}>
         <BreadcrumbsProvider>
           <Breadcrumbs />
-          {/* {breadcrumbs && (<Breadcrumbs items={breadcrumbs} />)} */}
           <Outlet />
         </BreadcrumbsProvider>
       </main>

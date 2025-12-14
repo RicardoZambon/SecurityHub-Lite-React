@@ -10,7 +10,6 @@ export default function ListView({
   actions,
   buttons,
   children,
-  //fixedFilters,
   icon,
   showBackButton = false,
   title,

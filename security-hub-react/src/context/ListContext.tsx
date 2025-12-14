@@ -5,7 +5,6 @@ type ListViewContextState = {
   selectedItemId?: string;
   setFilter: (key: string, value?: string | null) => void;
   setSelectedItemId: (id: string | undefined) => void;
-  //setFixedFilter: (fixedFilter: Record<string, string | null | undefined>) => void;
 };
 
 const ListViewContext = createContext<ListViewContextState | undefined>(undefined);
@@ -29,7 +28,6 @@ export function ListViewProvider({
       selectedItemId: selectedItemId,
       setFilter: handleSetFilter,
       setSelectedItemId: (itemId: string | undefined) => setSelectedItemId(itemId),
-      //setFixedFilter: (fixedFilter: Record<string, string | null | undefined>) => { setFilter(fixedFilter); },
     }}>
       {children}
     </ListViewContext.Provider>
