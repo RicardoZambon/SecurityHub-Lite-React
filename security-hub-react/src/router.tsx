@@ -8,7 +8,7 @@ import HomePage from './pages/HomePage';
 import RolesDetailsPage from './pages/Roles/RolesDetailsPage';
 import RolesPage from "./pages/Roles/RolesListPage";
 import RolesNewPage from './pages/Roles/RolesNewPage';
-import UsersDetailsPage from './pages/Users/USersDetailsPage';
+import UsersDetailsPage from './pages/Users/UsersDetailsPage';
 import UsersPage from './pages/Users/UsersListPage';
 import UsersNewPage from './pages/Users/UsersNewPage';
 
