@@ -3,13 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDataView } from '../../context/DataViewContext';
 import styles from './Button.module.css';
 
-export type EditButtonProps<T> = {
+export type EditButtonProps = {
   isDisabled?: boolean,
 };
 
-export default function EditButton<T>({
+export default function EditButton({
   isDisabled = false,
-}: EditButtonProps<T>) {
+}: EditButtonProps) {
   const { entityDetails, finishEditing, isDisabled: isFormDisabled, isNew, mode,  startEditing } = useDataView();
   const { isLoading, isFetching } = entityDetails || { isLoading: false, isFetching: false };
 

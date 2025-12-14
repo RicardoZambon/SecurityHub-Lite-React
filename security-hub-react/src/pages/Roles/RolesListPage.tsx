@@ -30,7 +30,7 @@ export default function RolesPage() {
     setFixedFilter({ applicationId: app?.id });
 
     if (app) {
-      setExtraBreadcrumbs([{ label: app.name, to: `/applications?appId=${app.id}` }]);
+      setExtraBreadcrumbs([{ label: app.name ?? 'Unknown Application', to: `/applications?appId=${app.id}` }]);
     }
 
     return () => {
@@ -66,7 +66,7 @@ export default function RolesPage() {
 
       {selectedApplication && (
         <SelectedBadge
-          name={selectedApplication.name}
+          name={selectedApplication.name || 'Unknown Application'}
           onClear={() => {
             setSearchParams({});
           }}
