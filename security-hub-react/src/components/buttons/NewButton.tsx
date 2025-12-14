@@ -14,6 +14,9 @@ export default function NewButton({
 }: NewButtonProps) {
   const navigate = useNavigate();
 
+  const currentPath: string = window.location.pathname;
+  const isAlreadyAtNewPage: boolean = currentPath.endsWith('/new');
+
   const handleButtonClick = () => {
     let redirectPath: string  = 'new';
     if (path && path.length > 0) {
@@ -27,7 +30,7 @@ export default function NewButton({
     <button
       className={styles.button}
       onClick={handleButtonClick}
-      disabled={isDisabled}
+      disabled={isDisabled || isAlreadyAtNewPage}
     >
       <FontAwesomeIcon icon={faPlus} />
       <span className={styles.text}>

@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import NewButton from '../../components/buttons/NewButton';
+import OpenButton from '../../components/buttons/OpenButton';
 import RefreshButton from '../../components/buttons/RefreshButton';
 import ListGrid, { type LisGridColumn } from '../../components/ListGrid';
 import SearchBox from '../../components/SearchBox';
 import SelectedBadge from '../../components/SelectedBadge';
 import ListView from '../../components/Views/ListView';
 import { useBreadcrumbs } from '../../context/BreadcrumbsContext';
-import { useListApplications } from '../../hooks/entities/useListApplications';
-import { useListRoles } from '../../hooks/entities/useListRoles';
+import { useListApplications } from '../../hooks/entities/applications/useListApplications';
+import { useListRoles } from '../../hooks/entities/roles/useListRoles';
 import type { Application } from '../../services/applicationService';
 import { type Role } from '../../services/roleService';
 
@@ -55,6 +57,14 @@ export default function RolesPage() {
       }
       buttons={
         <>
+          <NewButton
+            isDisabled={isLoading}
+          />
+
+          <OpenButton
+            isDisabled={isLoading}
+          />
+
           <RefreshButton
             refreshFunc={() => { refresh(); }}
             isDisabled={isLoading}

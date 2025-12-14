@@ -5,7 +5,9 @@ import ApplicationsListPage from './pages/Applications/ApplicationsListPage';
 import ApplicationsDetailsPage from './pages/Applications/ApplictionsDetailsPage';
 import ApplicationsNewPage from './pages/Applications/ApplictionsNewPage';
 import HomePage from './pages/HomePage';
+import RolesDetailsPage from './pages/Roles/RolesDetailsPage';
 import RolesPage from "./pages/Roles/RolesListPage";
+import RolesNewPage from './pages/Roles/RolesNewPage';
 import UsersPage from './pages/Users/UsersListPage';
 
 export const ROUTES = [
@@ -45,6 +47,16 @@ export const ROUTES = [
           {
             path: "",
             element: <RolesPage />,
+          },
+          {
+            path: "new",
+            element: <RolesNewPage />,
+            handle: { title: "New application", icon: faLayerGroup },
+          },
+          {
+            path: ":id",
+            element: <RolesDetailsPage />,
+            handle: { title: "Edit application", icon: faLayerGroup },
           },
         ]
       },

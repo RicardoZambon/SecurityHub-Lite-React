@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { getApplicationById, type Application } from '../../services/applicationService';
-import type { EntityDetails } from '../../types/entityDetails';
+import { getApplicationById, type Application } from '../../../services/applicationService';
+import type { EntityDetails } from '../../../types/entityDetails';
 
 const STORE_KEY = 'applications';
 

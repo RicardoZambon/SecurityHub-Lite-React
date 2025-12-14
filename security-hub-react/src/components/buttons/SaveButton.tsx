@@ -10,12 +10,14 @@ import { useNavigate } from 'react-router-dom';
 export type SaveButtonProps<T> = {
   isDisabled?: boolean,
   onSave: (item: T) => Promise<string>,
+  storeKey: string,
   validator: (item: T) => Promise<Errors | null>,
 };
 
 export default function SaveButton<T>({
   isDisabled = false,
   onSave,
+  storeKey,
   validator,
 }: SaveButtonProps<T>) {
   const queryClient = useQueryClient();
@@ -31,7 +33,7 @@ export default function SaveButton<T>({
     onSuccess: (itemId: string) => {
       enableForm();
       setIsLoading(false);
-      queryClient.invalidateQueries({ queryKey: ['applications'] });
+      queryClient.invalidateQueries({ queryKey: [storeKey] });
 
       if (isNewEntity) {
         // If we just created a new entity, we need to redirect to the new entity's detail page.
@@ -44,7 +46,7 @@ export default function SaveButton<T>({
         navigate(newPath);
         
       } else {
-        queryClient.invalidateQueries({ queryKey: ['entityDetails', itemId] });
+        queryClient.invalidateQueries({ queryKey: [storeKey, itemId] });
         finishEditing();
       }
     },
@@ -71,6 +73,7 @@ export default function SaveButton<T>({
       return;
     }
 
+    console.log('Saving data', formData);
     onSaveMutate(formData as T);
   };
 

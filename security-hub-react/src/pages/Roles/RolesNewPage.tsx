@@ -2,32 +2,32 @@ import EditButton from '../../components/buttons/EditButton';
 import NewButton from '../../components/buttons/NewButton';
 import SaveButton from '../../components/buttons/SaveButton';
 import DataView from '../../components/Views/DataView';
-import { useValidateApplication } from '../../hooks/entities/applications/useValidateApplication';
-import { saveApplication } from '../../services/applicationService';
-import ApplicationsForm from './ApplicationsForm';
+import { useValidateRole } from '../../hooks/entities/roles/useValidateRole';
+import { saveRole } from '../../services/roleService';
+import RolesForm from './RolesForm';
 
-export default function ApplicationsNewPage() {
+export default function RolesNewPage() {
   return (
     <DataView
       buttons={
         <>
           <NewButton
             isDisabled={false}
-            path="/applications"
+            path="/roles"
           />
 
           <EditButton />
 
           <SaveButton
             isDisabled={false}
-            onSave={saveApplication}
-            storeKey='applications'
-            validator={useValidateApplication}
+            onSave={saveRole}
+            storeKey='roles'
+            validator={useValidateRole}
           />
         </>
       }
     >
-      <ApplicationsForm />
+      <RolesForm />
     </DataView>
   );
 }

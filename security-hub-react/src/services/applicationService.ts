@@ -27,7 +27,7 @@ export function saveApplication(application: Application): Promise<string> {
       const applications = readApplications();
       if (application.id) {
         // Update existing application
-        const index = applications.findIndex(app => app.id === application.id);
+        const index = applications.findIndex(a => a.id === application.id);
         if (index !== -1) {
           applications[index] = application;
         } else {

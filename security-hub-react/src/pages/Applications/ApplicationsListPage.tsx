@@ -4,7 +4,7 @@ import RefreshButton from '../../components/buttons/RefreshButton';
 import ListGrid, { type LisGridColumn } from '../../components/ListGrid';
 import SearchBox from '../../components/SearchBox';
 import ListView from '../../components/Views/ListView';
-import { useListApplications } from '../../hooks/entities/useListApplications';
+import { useListApplications } from '../../hooks/entities/applications/useListApplications';
 import { type Application } from '../../services/applicationService';
 import { ViewRolesButton } from './customButtons/ViewRolesButton';
 

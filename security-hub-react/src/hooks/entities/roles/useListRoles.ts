@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
-import { fetchRoles, type Role } from '../../services/roleService';
-import type { EntityList } from '../../types/entityList';
+import { fetchRoles, type Role } from '../../../services/roleService';
+import type { EntityList } from '../../../types/entityList';
 
 const STORE_KEY = 'roles';
 
