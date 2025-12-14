@@ -118,11 +118,7 @@
 /* ============================== */
 
 .content {
-  @apply flex py-4 flex-col grow overflow-y-auto bg-gray-50;
-}
-
-.content nav {
-  @apply px-4;
+  @apply flex p-4 gap-2 flex-col grow overflow-y-auto bg-gray-50;
 }
 
 :global(.dark) .content {

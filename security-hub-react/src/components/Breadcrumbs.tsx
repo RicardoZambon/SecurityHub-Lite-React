@@ -1,45 +1,55 @@
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons"
+import { faChevronRight, faHome } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Link } from "react-router-dom"
 import { useBreadcrumbs, type Crumb } from '../context/BreadcrumbsContext'
+import { useCurrentRoute } from '../hooks/breadcrumbs/useCurrentRoute'
 import styles from "./Breadcrumbs.module.css"
 
 export default function Breadcrumbs() {
   const { breadcrumbs, extraBreadcrumbs } = useBreadcrumbs();
-  breadcrumbs.push(...(extraBreadcrumbs || []));
+  const currentPage = useCurrentRoute();
+
+  let displayedBreadcrumbs = [...breadcrumbs, ...(extraBreadcrumbs || [])];
 
   return (
     <nav className={styles.root} aria-label="Breadcrumb">
-      {breadcrumbs.map((item: Crumb, idx: number) => {
-        const isLast: boolean = idx === breadcrumbs.length - 1
+      {currentPage && (
+        <>
+          <Link to={'/'} className={styles.crumbLink}>
+            <FontAwesomeIcon icon={faHome} className={styles.crumbIcon} />
+          </Link>
 
-        return (
-          <div key={idx} className={styles.crumbWrapper}>
-
-            {item.icon && (
-              <FontAwesomeIcon
-                icon={item.icon}
-                className={styles.crumbIcon}
-              />
-            )}
-
-            {item.to && !isLast ? (
-              <Link to={item.to} className={styles.crumbLink}>
-                {item.label}
-              </Link>
-            ) : (
-              <span className={styles.crumbCurrent}>{item.label}</span>
-            )}
-
-            {!isLast && (
-              <FontAwesomeIcon
-                icon={faChevronRight}
-                className={styles.separator}
-              />
-            )}
+          <div>
+            <FontAwesomeIcon icon={faChevronRight} className={styles.separator} />
           </div>
-        )
-      })}
+
+          {displayedBreadcrumbs.map((item: Crumb, idx: number) => {
+            const isLast: boolean = idx === displayedBreadcrumbs.length - 1;
+
+            return (
+              <>
+                <Crumb key={idx} item={item} isLast={isLast} />
+                {!isLast && (<FontAwesomeIcon icon={faChevronRight} className={styles.separator} />)}
+              </>
+            );
+          })}
+        </>
+      )}
+
     </nav>
   )
+}
+
+function Crumb({ item, isLast }: { item: Crumb, isLast: boolean }) {
+  return (
+    <>
+      {!item.to || isLast ? (
+        <span className={`${styles.crumbCurrent} ${isLast ? 'crumbCurrent' : ''}`}>{item.label}</span>
+      ) : (
+        <Link to={item.to} className={styles.crumbLink}>
+          {item.label}
+        </Link>
+      )}
+    </>
+  );
 }
